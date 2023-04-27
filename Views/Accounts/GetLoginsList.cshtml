@@ -1,0 +1,61 @@
+﻿@model IEnumerable<ChatManager.Models.Login>
+@{
+    int currentDay = 0;
+    var loggedUsersId = (List<int>)ViewBag.LoggedUsersId;
+
+    foreach (var login in Model)
+    {
+        var shiftedLoginDate = login.LoginDate.AddHours((int)Session["TimeZoneOffset"]);
+        var shiftedLogoutDate = login.LogoutDate.AddHours((int)Session["TimeZoneOffset"]);
+
+        if (shiftedLoginDate.Day != currentDay)
+        {
+            currentDay = shiftedLoginDate.Day;
+            object param = new { day = login.LoginDate.ToShortDateString().Trim() };
+            <hr />
+            <div style="display:grid; grid-template-columns:80px 30px; align-items:center">
+                @shiftedLoginDate.ToShortDateString()
+                @Helper.IconConfirmCmdWithParam("Accounts", "DeleteJournalDay", param, "fa-times-rectangle-o", "Effacer la journée du " + shiftedLoginDate.ToShortDateString())
+            </div>
+            <hr />
+        }
+        <div class="loginJournalLayout">
+            <div>
+                @Helper.AvatarUser(login.User, "UserSmallAvatar")
+            </div>
+            <div>
+                @shiftedLoginDate.ToShortTimeString()
+            </div>
+
+            @if (shiftedLoginDate != shiftedLogoutDate)
+            {
+                <div>&nbsp;:&nbsp;@shiftedLogoutDate.ToShortTimeString()</div>
+            }
+            else
+            {
+                if (loggedUsersId.Contains(login.User.Id))
+                {
+                    loggedUsersId.Remove(login.User.Id);
+                    <div title="Est en ligne en ce moment">&nbsp;:&nbsp; @Helper.OnLineStatusIcon(true, false)</div>
+                }
+                else
+                {
+                    <div title="Session expirée">&nbsp;:&nbsp; @Helper.TimeOutIcon()</div>
+                }
+            }
+
+            @if (login.IpAddress != "::1" && login.CountryCode != null)
+            {
+
+                <div>
+                    <span>@login.City, @login.RegionName </span> @Helper.CountryFlag(login.CountryCode.ToLower())
+                </div>
+            }
+            else
+            {
+                <div>&nbsp;</div>
+            }
+
+        </div>
+    }
+}

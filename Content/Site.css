@@ -1,0 +1,493 @@
+﻿
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 330px;
+}
+
+.wideTexarea {
+    max-width: 100% !important;
+}
+
+#flag {
+}
+
+.countrySelector {
+    max-width: 330px;
+    display: grid;
+    grid-template-columns: auto 40px;
+    align-items: center;
+    column-gap: 6px;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #777;
+    border-color: #fff
+}
+
+.ui-datepicker {
+    width: 330px;
+    height: auto;
+    margin: 5px auto 0;
+    font: 14pt Arial, sans-serif;
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+body {
+    background-color: white;
+    background-size: cover;
+}
+
+.main {
+    height: 78vh;
+    scroll-behavior: smooth;
+    width: auto;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.mainDetails {
+    height: 83vh;
+    scroll-behavior: smooth;
+    width: auto;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.hideOverflow {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.main-menu {
+    background-color: black;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    column-gap: 9px;
+    padding-left: 7px;
+}
+
+.menu-Images {
+    height: 36px;
+}
+
+.menu-Icon {
+    font-size: 25px !important;
+    -webkit-text-stroke-width: 0 !important;
+    -webkit-text-fill-color: #FFF !important;
+}
+
+    .menu-Icon:hover {
+        -webkit-text-fill-color: #6dbafc !important;
+    }
+
+    .menu-Icon:active {
+        -webkit-text-fill-color: #e0f1ff !important;
+    }
+
+.icon {
+    font-size: 25px !important;
+    cursor: pointer;
+    -webkit-text-stroke-width: 0.75px;
+    -webkit-text-stroke-color: #337ab7;
+    -webkit-text-fill-color: #337ab7;
+}
+
+    .icon:hover {
+        -webkit-text-stroke-color: #6dbafc;
+        -webkit-text-fill-color: #6dbafc;
+    }
+
+    .icon:active {
+        -webkit-text-stroke-color: #e0f1ff;
+        -webkit-text-fill-color: #e0f1ff;
+    }
+
+
+.red {
+    -webkit-text-stroke-color: red;
+    -webkit-text-fill-color: red;
+}
+
+.green {
+    -webkit-text-stroke-color: green;
+    -webkit-text-fill-color: green;
+}
+
+.noCursor {
+    cursor: default;
+}
+
+.small_icon {
+    height: 24px;
+}
+
+.CB_Blocked {
+    width: 18px;
+    height: 18px;
+}
+
+#toggleShowPassword {
+    margin-top: 4px;
+    margin-left: -35px;
+}
+
+fieldset {
+    display: block;
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    border: 1px solid lightgray;
+}
+
+.legend {
+    font-weight: 600;
+    font-size: 16px;
+    color: deepskyblue;
+    margin-bottom: 15px;
+}
+
+.RadioButtonsGroup {
+    display: block;
+}
+
+.RadioButton {
+    display: grid;
+    grid-template-columns: 30px auto;
+}
+
+    .RadioButton input[type=radio] {
+        height: 18px !important;
+    }
+
+    .RadioButton label {
+        margin-top: 4px;
+        height: 20px !important;
+    }
+
+.formField {
+    width: 330px !important;
+}
+
+.selectionsGrid {
+    display: flex;
+}
+
+    .selectionsGrid select {
+        min-width: 120px;
+    }
+
+.selectionsIcons {
+    display: flex;
+    flex-direction: column;
+    min-width: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageUploader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 330px;
+    border: 1px solid lightgray;
+    border-radius: 6px;
+}
+
+.UploadedImage {
+    width: 328px !important;
+}
+
+img2 {
+    border: 1px solid red;
+}
+
+div2 {
+    border: 1px solid red;
+}
+
+.loginJournalLayout {
+    display: grid;
+    grid-template-columns: 250px 40px 60px auto;
+    align-items: center;
+    height: 40px;
+}
+
+.userContainer {
+    display: grid;
+    grid-template-columns: 165px 35px 35px 30px 40px 30px;
+    height: 60px;
+    align-items: center;
+}
+
+
+.friendContainer {
+    display: grid;
+    grid-template-columns: 165px 35px 35px 35px;
+    height: 60px;
+    align-items: center;
+}
+
+label2 {
+    border: 1px solid red;
+}
+
+input[type=checkbox] {
+    width: 16px !important;
+}
+
+.usersCheckList {
+    display: grid;
+    grid-template-columns: 30px 200px;
+}
+
+    .usersCheckList input[type=checkbox] {
+        margin-top: -3px;
+    }
+
+
+.largeAvatar {
+    width: 330px;
+    height: 500px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    border: 1px solid #ccc;
+}
+
+.UserSmallAvatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 35px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.UserMediumAvatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 35px;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.userItem {
+    display: flex;
+    column-gap: 8px;
+    align-items: center;
+}
+
+.smallAvatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+    background-size: cover !important;
+    background-position: top !important;
+    background-repeat: no-repeat !important;
+    border: 1px solid #ccc;
+}
+
+.selectedTarget {
+    display: grid;
+    grid-template-columns: 35px;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    border: 4px solid green;
+    text-align: center;
+    padding: 4px;
+    border-radius: 50px;
+}
+
+.unselectedTarget {
+    display: grid;
+    grid-template-columns: 35px;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    text-align: center;
+    padding: 7.5px;
+    border-radius: 50px;
+}
+
+    .unselectedTarget:hover {
+        background-color: #6dbafc;
+    }
+
+.friendsListContainer {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    height: 69vh;
+    overflow: scroll;
+    padding: 5px;
+}
+
+.messagesPanel {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    height: 69vh;
+    overflow: scroll;
+    padding: 5px;
+    overflow-y: visible;
+}
+
+.messagesHeader {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #3b67b1;
+    color: #e8f0fe;
+    font-size: 1.4em;
+}
+
+.receivedLayout {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.sentLayout {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.received {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    max-width: 400px;
+    background-color: #3b67b1;
+    color: #e8f0fe;
+}
+
+.sent {
+    padding: 8px;
+    margin: 5px;
+    border-radius: 5px;
+    max-width: 400px;
+    background-color: #f8cd53;
+    color: black;
+}
+
+
+.sendMessageLayout {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: auto 30px;
+    column-gap: 10px;
+    padding: 10px;
+    align-items: center;
+}
+
+.messageTime {
+    border-bottom: 1px solid #ccc;
+    margin: 5px;
+    text-align: center;
+    font-size: 0.75em;
+    font-family: monospace;
+    color: #ccc;
+}
+
+.editMessage {
+    display: grid;
+    grid-template-columns: auto 20px 20px;
+    align-items: center;
+}
+
+    .editMessage input {
+        width: 95% !important;
+        max-width: none;
+        background-color: antiquewhite;
+    }
+
+.smallerIcon {
+    font-size: 16px !important;
+}
+
+.contentImage {
+    width: 100%;
+}
+
+.messagesDump {
+    display: grid;
+    grid-template-columns: 50px 50px 35px auto;
+    align-items: center;
+}
+
+.friendfilters {
+    font-size: 20px !important;
+    display: grid;
+    grid-template-columns: 22px 35px 22px 35px 22px 35px 22px 35px 22px 35px 22px 35px;
+    align-items: center;
+}
+
+    .friendfilters input {
+        transform: scale(1.25);
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .friendfilters label {
+        margin-top:5px;
+    }
+
+input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+}
