@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "UserList";
+}
+
+<h2>Liste des usagers</h2>
+<hr />
+<div class="main">
+    <div id="UsersListContainer">
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/NotificationsHandler")
+
+    <script defer>
+        let GetUsersList = new PartialRefresh("@Url.Action("GetUsersList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
+
+        function UpdateCheckboxChangeCallback() {
+            // renew checkbox change call back
+            $(".CB_Blocked").change(
+                function () {
+                    let userid = this.id.split('_')[1];
+                    GetUsersList.command("@Url.Action("ChangeUserBlockedStatus")" + "?userid=" + userid + "&blocked=" + this.checked.toString());
+                }
+            );
+            $(".DELETE_USER").click(
+                function () {
+                    let userid = this.id.split('_')[1];
+                    GetUsersList.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
+                }
+            );
+            // do not use
+            $(".SwitchToUser").click(function () {
+                window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
+            })
+        }
+    </script>
+}
+

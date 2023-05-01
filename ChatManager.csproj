@@ -123,7 +123,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CountryFlagController.cs" />
+    <Compile Include="Controllers\FriendshipsController.cs" />
     <Compile Include="Controllers\Gmail.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
@@ -131,6 +133,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Friendship.cs" />
+    <Compile Include="Models\FriendshipManager.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Countries.cs" />
     <Compile Include="Models\DB.cs" />
@@ -210,6 +214,7 @@
     <Content Include="App_Data\Users.json" />
     <Content Include="App_Data\UserTypes.json" />
     <None Include="Properties\PublishProfiles\ChatManager2023 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ChatManager20230501161851 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\MoviesRepository - Web Deploy.pubxml" />
@@ -263,6 +268,9 @@
     <Content Include="Views\Accounts\UserList.cshtml" />
     <Content Include="Views\Accounts\VerifyDone.cshtml" />
     <Content Include="Views\Accounts\VerifyError.cshtml" />
+    <Content Include="Views\Social\GestionAmis.cshtml" />
+    <Content Include="Views\Friendships\Index.cshtml" />
+    <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
