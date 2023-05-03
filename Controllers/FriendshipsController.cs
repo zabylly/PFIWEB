@@ -15,11 +15,11 @@ namespace ChatManager.Controllers
             return View();
         }
 
-        public ActionResult GetUsersList(bool forceRefresh = false)
+        public ActionResult GetFriendshipList(bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged())
             {
-                return PartialView(DB.Users.SortedUsers());
+                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, false, 0,1,2,3));
             }
             return null;
         }

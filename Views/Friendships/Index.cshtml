@@ -14,7 +14,7 @@
     @Scripts.Render("~/bundles/NotificationsHandler")
 
     <script defer>
-        let GetUsersList = new PartialRefresh("@Url.Action("GetUsersList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
+        let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
 
         function UpdateCheckboxChangeCallback() {
             // renew checkbox change call back

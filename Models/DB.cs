@@ -21,7 +21,7 @@ namespace ChatManager.Models
         }
         #endregion
         #region Repositories
-        public static Repository<Friendship> Friendships { get; set; }
+        public static FriendshipRepository Friendships { get; set; }
         public static Repository<Gender> Genders { get; set; }
         public static Repository<UserType> UserTypes { get; set; }
         public static Repository<UnverifiedEmail> UnverifiedEmails { get; set; }
@@ -32,7 +32,7 @@ namespace ChatManager.Models
         #region initialization
         public DB()
         {
-            Friendships = new Repository<Friendship>();
+            Friendships = new FriendshipRepository();
             Genders = new Repository<Gender>();
             UserTypes = new Repository<UserType>();
             UnverifiedEmails = new Repository<UnverifiedEmail>();
