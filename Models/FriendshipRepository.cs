@@ -8,8 +8,18 @@ namespace ChatManager.Models
     public class FriendshipRepository : Repository<Friendship>
     {
         //missing blocked, mais doit être filtrer a travers User pas Friendship
-        public IEnumerable<Friendship> SortedFriendshipByCategory(int userId, bool deniedFriend, params int[] friend)
+        public IEnumerable<Friendship> SortedFriendshipByCategory(int userId,bool noRelation,bool accepted, params int[] friend)
         {
+            IEnumerable<Friendship> friendshipsToShow = GetListFriendshipWithNullRelation(userId);
+            
+            if(!noRelation)
+            {
+                friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Nothing);
+            }
+            if(!accepted)
+            {
+                friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
+            }
             return GetListFriendshipWithNullRelation(userId);//.Where(u => u.DeniedFriend == deniedFriend);
         }
         public List<Friendship> GetListFriendshipWithNullRelation(int userId)

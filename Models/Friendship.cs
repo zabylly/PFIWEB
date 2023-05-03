@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,12 @@ namespace ChatManager.Models
 {
     public class Friendship : IEquatable<int>
     {
+        public const int Nothing = 0;
+        public const int RequestSend = 1;
+        public const int RequestReceved = 2;
+        public const int Accepted = 3;
+        public const int DeclineByYou = 4;
+        public const int DeclineByThem = 5;
         public Friendship(int id, int idFriend, int friendStatus)
         {
             Id = id;
