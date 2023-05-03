@@ -213,6 +213,7 @@
     <Content Include="App_Data\UnverifiedEmails.json" />
     <Content Include="App_Data\Users.json" />
     <Content Include="App_Data\UserTypes.json" />
+    <Content Include="App_Data\Friendships.json" />
     <None Include="Properties\PublishProfiles\ChatManager2023 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ChatManager20230501161851 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MDB2023 - Web Deploy.pubxml" />

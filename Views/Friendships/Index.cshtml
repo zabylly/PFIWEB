@@ -2,7 +2,7 @@
     ViewBag.Title = "UserList";
 }
 
-<h2>Liste des usagers</h2>
+<h2>Gestion d'amis</h2>
 <hr />
 <div class="main">
     <div id="UsersListContainer">
@@ -14,7 +14,7 @@
     @Scripts.Render("~/bundles/NotificationsHandler")
 
     <script defer>
-        let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
+        let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipsList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
 
         function UpdateCheckboxChangeCallback() {
             // renew checkbox change call back

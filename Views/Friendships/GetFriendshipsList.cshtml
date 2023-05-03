@@ -12,11 +12,49 @@
             </div>
 
             <div style="text-align:center">
-                @Helper.UserTypeIcon(item.Friend.UserTypeId)
+                @{ switch (item.FriendStatus)
+                    {
+                        default:
+                            Helper.Icon("addFriend", "fas fa-plus-circle", "Ajouté ami", "bottom", "green");
+                            break;
+                        case 1:
+                            Helper.Icon("addFriend", "far fa-clock", "attente de réponse d'amitié", "bottom", "green");
+                            break;
+                        case 2:
+                            Helper.Icon("addFriend", "fas fa-check", "devenir ami", "bottom", "green");
+                            break;
+                        case 3:
+                            Helper.Icon("addFriend", "fas fa-check-circle", "ami", "bottom", "green");
+                            break;
+                        case 4:
+                            Helper.Icon("nothing", "fa-times-circle", "Vous avez décliner l'amitié", "bottom", "red");
+                            break;
+                        case 5:
+                            Helper.Icon("addFriend", "fa-times-circle", "La personne a décliner l'amitié", "bottom", "green");
+                            break;
+                    }
+                }
             </div>
+
             <div style="text-align:center" title="Status du compte">
-                @Helper.Checked(item.Friend.Verified)
+                @{ switch (item.FriendStatus)
+                    {
+                        case 1:
+                            Helper.Icon("decline", "fa-times", "retirer la demande", "bottom", "red");
+                            break;
+                        case 2:
+                            Helper.Icon("denied", "fa-times", "décliner l'amitié", "bottom", "red");
+                            break;
+                        case 3:
+                            Helper.Icon("decline", "fa-times", "retirer l'amitié", "bottom", "red");
+                            break;
+                        case 4:
+                            Helper.Icon("addFriend", "fas fa-plus-circle", "Ajouté ami", "bottom", "green");
+                            break;
+                    }
+                }
             </div>
+
             <div style="text-align:center">
                 @if (!item.Friend.IsAdmin)
                 {
@@ -37,7 +75,7 @@
             <div>
                 @if (!item.Friend.IsAdmin)
                 {
-                    <div id="delete_@item.Id" class="DELETE_USER icon red fa fa-times-circle" title="Effacer l'usager @item.GetFullName()"></div>
+                    <div id="delete_@item.Id" class="DELETE_USER icon red fa fa-times-circle" title="Effacer l'usager @item.Friend.GetFullName()"></div>
                 }
                 else
                 {

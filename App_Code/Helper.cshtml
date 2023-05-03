@@ -104,12 +104,13 @@
         <img src="@Url.Content(imageUrl)" class="@imageClass" title="@title" />
     </a>
 }
-@helper Icon(string controlId, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom")
+@helper Icon(string controlId, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom", string color = "grey")
 {
     <span id="@controlId"
           class="icon fa @icon_class"
           title="@TooltipMessage"
-          data-placement="@ToolTipPlacement">
+          data-placement="@ToolTipPlacement"
+          style="color: @color">
     </span>
 }
 @helper IconCmd(string controller, string action, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom")
