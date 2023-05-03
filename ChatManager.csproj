@@ -134,7 +134,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Friendship.cs" />
-    <Compile Include="Models\FriendshipManager.cs" />
+    <Compile Include="Models\FriendshipRepository.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Countries.cs" />
     <Compile Include="Models\DB.cs" />
@@ -271,6 +271,7 @@
     <Content Include="Views\Social\GestionAmis.cshtml" />
     <Content Include="Views\Friendships\Index.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Friendships\GetFriendshipsList.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

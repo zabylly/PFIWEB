@@ -1,0 +1,51 @@
+﻿@model IEnumerable<ChatManager.Models.Friendship>
+
+@foreach (ChatManager.Models.Friendship item in Model)
+{
+    if (item.IdFriend != ChatManager.Models.OnlineUsers.GetSessionUser().Id)
+    {
+        bool isOnline = ChatManager.Models.OnlineUsers.IsOnLine(item.IdFriend);
+        <div class="userContainer" style="font-size:14px;">
+            @Helper.AvatarUser(item.Friend, "UserSmallAvatar")
+            <div style="text-align:center" title="Status de connexion">
+                @Helper.OnLineStatusIcon(isOnline, item.Friend.Blocked)
+            </div>
+
+            <div style="text-align:center">
+                @Helper.UserTypeIcon(item.Friend.UserTypeId)
+            </div>
+            <div style="text-align:center" title="Status du compte">
+                @Helper.Checked(item.Friend.Verified)
+            </div>
+            <div style="text-align:center">
+                @if (!item.Friend.IsAdmin)
+                {
+                    if (item.Friend.Blocked)
+                    {
+                        <input type="checkbox" id="blocked_@item.Id" class="CB_Blocked" checked title="Ce compte est bloqué" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" id="blocked_@item.Id" class="CB_Blocked" title="Ce compte est non bloqué" />
+                    }
+                }
+                else
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @if (!item.Friend.IsAdmin)
+                {
+                    <div id="delete_@item.Id" class="DELETE_USER icon red fa fa-times-circle" title="Effacer l'usager @item.GetFullName()"></div>
+                }
+                else
+                {
+                    <div></div>
+                }
+            </div>
+        </div>
+    }
+}
+
+
