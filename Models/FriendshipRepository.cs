@@ -10,7 +10,24 @@ namespace ChatManager.Models
         //missing blocked, mais doit être filtrer a travers User pas Friendship
         public IEnumerable<Friendship> SortedFriendshipByCategory(int userId, bool deniedFriend, params int[] friend)
         {
-            return ToList().Where(u => u.Id == userId).Where(u => u.DeniedFriend = deniedFriend);
+            return GetListFriendshipWithNullRelation(userId);//.Where(u => u.DeniedFriend == deniedFriend);
+        }
+        public List<Friendship> GetListFriendshipWithNullRelation(int userId)
+        {
+            IEnumerable<Friendship> friendships = ToList().Where(u => u.Id == userId);
+            List<Friendship> friendshipsComplete = new List<Friendship>(friendships);
+
+            foreach (User user in DB.Users.ToList())
+            {
+                foreach (Friendship friendship in friendships)
+                {
+                    if (!friendship.Equals(user.Id) && user.Id != userId)
+                    {
+                        friendshipsComplete.Add(new Friendship(userId, user.Id, 0));
+                    }
+                }
+            }
+            return friendshipsComplete;
         }
     }
 }

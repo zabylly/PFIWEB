@@ -1,1 +1,1 @@
-[{"Id":1,"UserId":1,"LoginDate":"2023-05-02T12:06:53.4963281-04:00","LogoutDate":"2023-05-02T12:06:53.4963281-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""}]
+[{"Id":1,"UserId":1,"LoginDate":"2023-05-02T12:06:53.4963281-04:00","LogoutDate":"2023-05-02T12:06:53.4963281-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""},{"Id":2,"UserId":1,"LoginDate":"2023-05-02T20:18:25.5681749-04:00","LogoutDate":"2023-05-02T20:18:25.5681749-04:00","IpAddress":"::1","City":"","RegionName":"","CountryCode":""}]

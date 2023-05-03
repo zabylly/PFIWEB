@@ -55,5 +55,6 @@ namespace ChatManager.Models
             }
         }
         #endregion
+
     }
 }
