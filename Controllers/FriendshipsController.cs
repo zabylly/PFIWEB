@@ -15,7 +15,7 @@ namespace ChatManager.Controllers
             return View();
         }
 
-        public ActionResult GetFriendshipList(bool forceRefresh = false)
+        public ActionResult GetFriendshipsList(bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged())
             {

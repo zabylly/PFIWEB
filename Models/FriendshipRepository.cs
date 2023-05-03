@@ -29,5 +29,7 @@ namespace ChatManager.Models
             }
             return friendshipsComplete;
         }
+
+
     }
 }
