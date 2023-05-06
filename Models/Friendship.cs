@@ -15,11 +15,11 @@ namespace ChatManager.Models
         public const int Accepted = 3;
         public const int DeclineByYou = 4;
         public const int DeclineByThem = 5;
-        public Friendship(int id, int idFriend, int friendStatus)
+        public Friendship()
         {
-            Id = id;
-            IdFriend = idFriend;
-            FriendStatus = friendStatus;
+            Id = 0;
+            IdFriend = 0;
+            FriendStatus = 0;
         }
 
         public int Id { get; set; }

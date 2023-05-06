@@ -19,7 +19,7 @@ namespace ChatManager.Controllers
         {
             if (forceRefresh || OnlineUsers.HasChanged())
             {
-                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, false, 0,1,2,3));
+                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, false, false,1,2,3));
             }
             return null;
         }

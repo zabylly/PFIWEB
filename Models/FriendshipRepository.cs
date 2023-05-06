@@ -33,7 +33,11 @@ namespace ChatManager.Models
                 {
                     if (!friendship.Equals(user.Id) && user.Id != userId)
                     {
-                        friendshipsComplete.Add(new Friendship(userId, user.Id, 0));
+                        Friendship fship = new Friendship();
+                        fship.Id = userId;
+                        fship.IdFriend = user.Id;
+                        fship.FriendStatus = 0;
+                        friendshipsComplete.Add(fship);
                     }
                 }
             }
