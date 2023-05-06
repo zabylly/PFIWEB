@@ -11,15 +11,19 @@ namespace ChatManager.Models
         public IEnumerable<Friendship> SortedFriendshipByCategory(int userId, bool showAccountBlocked, params int[] relationToShow)
         {
             IEnumerable<Friendship> allFriendship = GetListFriendshipWithNullRelation(userId);
-            IEnumerable<Friendship> friendshipToShow = new List<Friendship>();
-
+            IEnumerable<Friendship> friendshipsToShow = new List<Friendship>();
+            
 
             foreach (int relation in relationToShow)
             {
-                friendshipToShow = friendshipToShow.Concat(allFriendship.Where(u => u.FriendStatus == relation));
+                friendshipsToShow = friendshipsToShow.Concat(allFriendship.Where(u => u.FriendStatus == relation));
+            }
+            if(!showAccountBlocked)
+            {
+                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.Blocked == true);
             }
                 //friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
-            return friendshipToShow;//.Where(u => u.DeniedFriend == deniedFriend);
+            return friendshipsToShow;//.Where(u => u.DeniedFriend == deniedFriend);
         }
         public List<Friendship> GetListFriendshipWithNullRelation(int userId)
         {
