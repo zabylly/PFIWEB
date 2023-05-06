@@ -8,34 +8,33 @@ namespace ChatManager.Models
     public class FriendshipRepository : Repository<Friendship>
     {
         //missing blocked, mais doit être filtrer a travers User pas Friendship
-        public IEnumerable<Friendship> SortedFriendshipByCategory(int userId,bool noRelation,bool accepted, params int[] friend)
+        public IEnumerable<Friendship> SortedFriendshipByCategory(int userId, bool showAccountBlocked, params int[] relationToShow)
         {
-            IEnumerable<Friendship> friendshipsToShow = GetListFriendshipWithNullRelation(userId);
-            
-            if(!noRelation)
+            IEnumerable<Friendship> allFriendship = GetListFriendshipWithNullRelation(userId);
+            IEnumerable<Friendship> friendshipToShow = new List<Friendship>();
+
+
+            foreach (int relation in relationToShow)
             {
-                friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Nothing);
+                friendshipToShow = friendshipToShow.Concat(allFriendship.Where(u => u.FriendStatus == relation));
             }
-            if(!accepted)
-            {
-                friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
-            }
-            return GetListFriendshipWithNullRelation(userId);//.Where(u => u.DeniedFriend == deniedFriend);
+                //friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
+            return friendshipToShow;//.Where(u => u.DeniedFriend == deniedFriend);
         }
         public List<Friendship> GetListFriendshipWithNullRelation(int userId)
         {
             IEnumerable<Friendship> friendships = ToList().Where(u => u.Id == userId);
             List<Friendship> friendshipsComplete = new List<Friendship>(friendships);
 
-            foreach (User user in DB.Users.ToList())
+            foreach (User amis in DB.Users.ToList())
             {
                 foreach (Friendship friendship in friendships)
                 {
-                    if (!friendship.Equals(user.Id) && user.Id != userId)
+                    if (!friendship.Equals(amis.Id) && amis.Id != userId)
                     {
                         Friendship fship = new Friendship();
                         fship.Id = userId;
-                        fship.IdFriend = user.Id;
+                        fship.IdFriend = amis.Id;
                         fship.FriendStatus = 0;
                         friendshipsComplete.Add(fship);
                     }
