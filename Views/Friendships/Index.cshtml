@@ -4,6 +4,12 @@
 
 <h2>Gestion d'amis</h2>
 <hr />
+<input type="checkbox" value="0" class="rechercheFriendship" checked title="non ami" />
+<input type="checkbox" value="1" class="rechercheFriendship" checked title="en attente de leur confirmation" />
+<input type="checkbox" value="2" class="rechercheFriendship" checked title="en attente de votre confirmation" />
+<input type="checkbox" value="3" class="rechercheFriendship" checked title="ami" />
+<input type="checkbox" value="4" class="rechercheFriendship" checked title="dénier amitié" />
+<input type="checkbox" value="5" class="rechercheFriendship" checked title="bloqué par administrateur" />
 <div class="main">
     <div id="UsersListContainer">
     </div>
@@ -13,15 +19,21 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/NotificationsHandler")
 
-    <script defer>
+<script defer>
         let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipsList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
 
         function UpdateCheckboxChangeCallback() {
             // renew checkbox change call back
-            $(".CB_Blocked").change(
+            $(".rechercheFriendship").change(
                 function () {
-                    let userid = this.id.split('_')[1];
-                    GetUsersList.command("@Url.Action("ChangeUserBlockedStatus")" + "?userid=" + userid + "&blocked=" + this.checked.toString());
+                    var checkedValue = "";
+                    var inputElements = document.getElementsByClassName('rechercheFriendship');
+                    for (var i = 0; inputElements[i]; ++i) {
+                        if (inputElements[i].checked) {
+                            checkedValue += inputElements[i].value + "_";
+                        }
+                    }
+                    let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipsList")" + "?recherche=" + checkedValue, "UsersListContainer", 5, UpdateCheckboxChangeCallback);
                 }
             );
             $(".DELETE_USER").click(
@@ -35,6 +47,6 @@
                 window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
             })
         }
-    </script>
+</script>
 }
 

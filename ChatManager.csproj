@@ -208,7 +208,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Code\Helper.cshtml" />
     <Content Include="App_Data\Genders.json" />
-    <Content Include="App_Data\Logins.json" />
     <Content Include="App_Data\ResetPasswordCommands.json" />
     <Content Include="App_Data\UnverifiedEmails.json" />
     <Content Include="App_Data\Users.json" />

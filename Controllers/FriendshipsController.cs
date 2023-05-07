@@ -15,11 +15,21 @@ namespace ChatManager.Controllers
             return View();
         }
 
-        public ActionResult GetFriendshipsList(bool forceRefresh = false)
+        public ActionResult GetFriendshipsList(string recherche, bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged())
             {
-                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, false,0,1,2,3));
+                int[] paramInt = null;
+                if (recherche != null)
+                {
+                    string[] paramString = recherche.Split('_');
+                    paramInt = new int[paramString.Length - 1];
+                    for (int i = 0; i < paramString.Length - 1; i++)
+                    {
+                        paramInt[i] = int.Parse(paramString[i]);
+                    }
+                }
+                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, true, paramInt));
             }
             return null;
         }
