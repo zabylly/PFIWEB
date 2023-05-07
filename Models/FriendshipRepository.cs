@@ -13,11 +13,18 @@ namespace ChatManager.Models
         {
             IEnumerable<Friendship> allFriendship = GetListFriendshipWithNullRelation(userId);
             IEnumerable<Friendship> friendshipsToShow = new List<Friendship>();
-            
 
-            foreach (int relation in relationToShow)
+
+            if (relationToShow != null)
             {
-                friendshipsToShow = friendshipsToShow.Concat(allFriendship.Where(u => u.FriendStatus == relation));
+                foreach (int relation in relationToShow)
+                {
+                    friendshipsToShow = friendshipsToShow.Concat(allFriendship.Where(u => u.FriendStatus == relation));
+                }
+            }
+            else
+            {
+                friendshipsToShow= allFriendship;
             }
             if(!showAccountBlocked)
             {
@@ -52,8 +59,8 @@ namespace ChatManager.Models
             try
             {
                 OnlineUsers.SetHasChanged();
-                IEnumerable<Friendship> friendships = ToList().Where(u => u.Id == demandeAmis.IdFriend && u.IdFriend == demandeAmis.Id);//supposé etre vide
-                if (friendships.Count() == 1 && friendships.First().FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
+                Friendship friendRelation = FindFriendRelation(demandeAmis);
+                if (friendRelation != null && friendRelation.FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
                 {
                     
                 }
@@ -72,6 +79,15 @@ namespace ChatManager.Models
             }
             return null;
         }
+        //public Friendship AccepterDemandeAmis(Friendship friendship)
+        //{
+        //    OnlineUsers.SetHasChanged();
+        //    Friendship friendRelation = FindFriendRelation(demandeAmis);
+        //}
+        public Friendship FindFriendRelation(Friendship friendship)
+        {
+            return ToList().Where(u => u.Id == friendship.IdFriend && u.IdFriend == friendship.Id).First();
 
+        }
     }
 }
