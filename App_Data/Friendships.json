@@ -2,7 +2,11 @@
   {
     "Id": 1,
     "IdFriend": 2,
-    "FriendStatus": 0,
-    "DeniedFriend": false
+    "FriendStatus": 3
+  },
+  {
+    "Id": 2,
+    "IdFriend": 1,
+    "FriendStatus": 3
   }
 ]
