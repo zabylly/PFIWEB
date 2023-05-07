@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace ChatManager.Models
@@ -46,7 +47,31 @@ namespace ChatManager.Models
             }
             return friendshipsComplete;
         }
-
+        public Friendship EnvoyerDemandeAmis(Friendship demandeAmis)
+        {
+            try
+            {
+                OnlineUsers.SetHasChanged();
+                IEnumerable<Friendship> friendships = ToList().Where(u => u.Id == demandeAmis.IdFriend && u.IdFriend == demandeAmis.Id);//supposé etre vide
+                if (friendships.Count() == 1 && friendships.First().FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
+                {
+                    
+                }
+                demandeAmis.FriendStatus = Friendship.RequestSend;
+                demandeAmis.Id = base.Add(demandeAmis);
+                Friendship receveurDemande = new Friendship();
+                receveurDemande.Id= demandeAmis.IdFriend;
+                receveurDemande.IdFriend = demandeAmis.Id;
+                receveurDemande.FriendStatus = Friendship.RequestReceved;
+                base.Add(receveurDemande);
+                return demandeAmis;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
+            }
+            return null;
+        }
 
     }
 }
