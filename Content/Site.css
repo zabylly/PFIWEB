@@ -139,8 +139,6 @@ body {
     font-size: 25px !important;
     cursor: pointer;
     -webkit-text-stroke-width: 0.75px;
-    -webkit-text-stroke-color: #337ab7;
-    -webkit-text-fill-color: #337ab7;
 }
 
     .icon:hover {

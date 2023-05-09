@@ -104,7 +104,7 @@
         <img src="@Url.Content(imageUrl)" class="@imageClass" title="@title" />
     </a>
 }
-@helper Icon(string controlId, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom", string color = "grey")
+@helper Icon(string controlId, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom", string color = "#337ab7")
 {
     <span id="@controlId"
           class="icon fa @icon_class"

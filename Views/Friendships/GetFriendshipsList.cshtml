@@ -21,21 +21,21 @@
                         switch (item.FriendStatus)
                         {
                             default:
-                                @Helper.Icon("addFriend", "fa-plus-circle", "Ajouté ami", "bottom", "green");
+                                @Helper.Icon("addFriend", "fa-plus-circle", "Ajouter ami", "bottom", "green");
                                 break;
-                            case 1:
+                            case ChatManager.Models.Friendship.RequestSend:
                                 @Helper.Icon("addFriend", "far fa-clock", "attente de réponse d'amitié", "bottom", "green");
                                 break;
-                            case 2:
+                            case ChatManager.Models.Friendship.RequestReceved:
                                 @Helper.Icon("addFriend", "fas fa-check", "devenir ami", "bottom", "green");
                                 break;
-                            case 3:
+                            case ChatManager.Models.Friendship.Accepted:
                                 @Helper.Icon("addFriend", "fas fa-check-circle", "ami", "bottom", "green");
                                 break;
-                            case 4:
+                            case ChatManager.Models.Friendship.DeclineByYou:
                                 @Helper.Icon("nothing", "fa-times-circle", "Vous avez décliner l'amitié", "bottom", "red");
                                 break;
-                            case 5:
+                            case ChatManager.Models.Friendship.DeclineByThem:
                                 @Helper.Icon("addFriend", "fa-times-circle", "La personne a décliner l'amitié", "bottom", "green");
                                 break;
                         }
@@ -46,16 +46,16 @@
             <div style="text-align:center" title="Status du compte">
                 @{ switch (item.FriendStatus)
                     {
-                        case 1:
+                        case ChatManager.Models.Friendship.RequestSend:
                             @Helper.Icon("decline", "fa-times", "retirer la demande", "bottom", "red");
                             break;
-                        case 2:
+                        case ChatManager.Models.Friendship.RequestReceved:
                             @Helper.Icon("denied", "fa-times", "décliner l'amitié", "bottom", "red");
                             break;
-                        case 3:
+                        case ChatManager.Models.Friendship.Accepted:
                             @Helper.Icon("decline", "fa-times", "retirer l'amitié", "bottom", "red");
                             break;
-                        case 4:
+                        case ChatManager.Models.Friendship.DeclineByYou:
                             @Helper.Icon("addFriend", "fas fa-plus-circle", "Ajouté ami", "bottom", "green");
                             break;
                     }

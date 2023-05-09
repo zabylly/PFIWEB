@@ -29,7 +29,7 @@ namespace ChatManager.Controllers
                         paramInt[i] = int.Parse(paramString[i]);
                     }
                 }
-                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, true, paramInt));
+                return PartialView(DB.Friendships.SortedFriendshipByCategory(OnlineUsers.GetSessionUser().Id, true,"",paramInt));
             }
             return null;
         }
