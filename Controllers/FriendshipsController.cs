@@ -2,34 +2,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using static System.Collections.Specialized.BitVector32;
 
 namespace ChatManager.Controllers
 {
     public class FriendshipsController : Controller
     {
+        string name = "";
         // GET: Friendships
         public ActionResult Index()
         {
             return View();
         }
+        public void UpdateNameSearch(string search) 
+        {
+            this.name = search;
+        }
 
-        public ActionResult GetFriendshipsList(string recherche, bool forceRefresh = false)
+        public void UpdateSearch(string recherche)
+        {
+            Session["paramSearch"] = recherche;
+        }
+
+        public ActionResult GetFriendshipsList(bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged())
             {
                 int[] paramInt = null;
-                if (recherche != null)
+                bool blocked = true;
+                if (Session["paramSearch"] != null)
                 {
-                    string[] paramString = recherche.Split('_');
+                    string[] paramString = Session["paramSearch"].ToString().Split('_');
                     paramInt = new int[paramString.Length - 1];
                     for (int i = 0; i < paramString.Length - 1; i++)
                     {
                         paramInt[i] = int.Parse(paramString[i]);
                     }
+                    blocked = paramString[paramString.Length - 1] == "1";
                 }
-                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, true, paramInt));
+                return PartialView(DB.Friendships.SortedFriendshipByCategory(1/*besoin user id*/, blocked, paramInt));
             }
             return null;
         }

@@ -4,14 +4,23 @@
 
 <h2>Gestion d'amis</h2>
 <hr />
+<input type="text" id="SearchText" />
+<i id="Search" data-placement="bottom" class="icon fa fas fa-search"></i>
+<br />
 <input type="checkbox" value="0" class="rechercheFriendship" checked title="non ami" />
+@Helper.Icon("addFriend", "fa-plus-circle", "Ajouté ami", "bottom", "green")
 <input type="checkbox" value="1" class="rechercheFriendship" checked title="en attente de leur confirmation" />
+@Helper.Icon("addFriend", "fa-clock-o", "attente de réponse d'amitié", "bottom", "green")
 <input type="checkbox" value="2" class="rechercheFriendship" checked title="en attente de votre confirmation" />
+@Helper.Icon("addFriend", "fas fa-check", "devenir ami", "bottom", "green")
 <input type="checkbox" value="3" class="rechercheFriendship" checked title="ami" />
+@Helper.Icon("addFriend", "fas fa-check-circle", "ami", "bottom", "green")
 <input type="checkbox" value="4" class="rechercheFriendship" checked title="dénier amitié" />
-<input type="checkbox" value="5" class="rechercheFriendship" checked title="bloqué par administrateur" />
+@Helper.Icon("nothing", "fa-times-circle", "décliner d'amitié", "bottom", "red")
+<input type="checkbox" value="5" id="userBlocked" checked title="bloqué par administrateur" />
+@Helper.Icon("cette usager est blocké", "fa-ban", "Utilisateur banni", "bottom", "red")
 <div class="main">
-    <div id="UsersListContainer">
+    <div id="friendshipsListContainer">
     </div>
 </div>
 
@@ -20,32 +29,41 @@
     @Scripts.Render("~/bundles/NotificationsHandler")
 
 <script defer>
-        let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipsList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
+    let friendshipStatus = new PartialRefresh("@Url.Action("GetFriendshipsList")", "friendshipsListContainer", 5, Callback);
 
-        function UpdateCheckboxChangeCallback() {
-            // renew checkbox change call back
-            $(".rechercheFriendship").change(
-                function () {
-                    var checkedValue = "";
-                    var inputElements = document.getElementsByClassName('rechercheFriendship');
-                    for (var i = 0; inputElements[i]; ++i) {
-                        if (inputElements[i].checked) {
-                            checkedValue += inputElements[i].value + "_";
-                        }
+        // renew checkbox change call back
+        $(".rechercheFriendship").change(
+            function () {
+                var checkedValue = "";
+                var inputElements = document.getElementsByClassName('rechercheFriendship');
+                for (var i = 0; inputElements[i]; ++i) {
+                    if (inputElements[i].checked) {
+                        checkedValue += inputElements[i].value + "_";
                     }
-                    let GetUsersList = new PartialRefresh("@Url.Action("GetFriendshipsList")" + "?recherche=" + checkedValue, "UsersListContainer", 5, UpdateCheckboxChangeCallback);
                 }
-            );
-            $(".DELETE_USER").click(
-                function () {
-                    let userid = this.id.split('_')[1];
-                    GetUsersList.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
-                }
-            );
-            // do not use
-            $(".SwitchToUser").click(function () {
-                window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
-            })
+                checkedValue += document.getElementById('userBlocked').checked ? '1' : '0';
+                friendshipStatus.command("@Url.Action("UpdateSearch")" + "?recherche=" + checkedValue)
+            }
+        );
+        $(".DELETE_USER").click(
+            function () {
+                let userid = this.id.split('_')[1];
+                friendShipStatus.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
+            }
+        );
+        // do not use
+        $(".SwitchToUser").click(function () {
+            window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
+        })
+        $('#Search').click(function () {
+            friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#Search').val())
+        })
+        function Callback() {
+            $(".command").click(function () {
+                var url = $(this).attr("url");
+                var message = $(this).attr("message");
+                friendShipsStatus.confirmedCommand(message, url);
+            });
         }
 </script>
 }
