@@ -5,7 +5,7 @@
 <h2>Gestion d'amis</h2>
 <hr />
 <input type="text" id="SearchText" />
-<i id="Search" data-placement="bottom" class="icon fa fas fa-search"></i>
+@Helper.Icon("Search", "fas fa-search", "recherche")
 <br />
 <input type="checkbox" value="0" class="rechercheFriendship" checked title="non ami" />
 @Helper.Icon("addFriend", "fa-plus-circle", "Ajouté ami", "bottom", "green")
@@ -28,13 +28,15 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/NotificationsHandler")
 
-<script defer>
+    <script defer>
     let friendshipStatus = new PartialRefresh("@Url.Action("GetFriendshipsList")", "friendshipsListContainer", 5, Callback);
 
         // renew checkbox change call back
-        $(".rechercheFriendship").change(
-            function () {
-                var checkedValue = "";
+        $(".rechercheFriendship").change(UpdateSearch);
+        $("#userBlocked").change(UpdateSearch);
+
+        function UpdateSearch() {
+            var checkedValue = "";
                 var inputElements = document.getElementsByClassName('rechercheFriendship');
                 for (var i = 0; inputElements[i]; ++i) {
                     if (inputElements[i].checked) {
@@ -43,8 +45,7 @@
                 }
                 checkedValue += document.getElementById('userBlocked').checked ? '1' : '0';
                 friendshipStatus.command("@Url.Action("UpdateSearch")" + "?recherche=" + checkedValue)
-            }
-        );
+        }
         $(".DELETE_USER").click(
             function () {
                 let userid = this.id.split('_')[1];
@@ -63,7 +64,10 @@
             window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
         })
         $('#Search').click(function () {
-            friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#Search').val())
+            friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
+        })
+        $('#SearchText').bind("keypress keyup keydown", function () {
+            friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
         })
         function Callback() {
             $(".command").click(function () {
@@ -72,6 +76,6 @@
                 friendShipsStatus.confirmedCommand(message, url);
             });
         }
-</script>
+    </script>
 }
 

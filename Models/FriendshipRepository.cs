@@ -28,11 +28,12 @@ namespace ChatManager.Models
             }
             if(!showAccountBlocked)
             {
-                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.Blocked == true);
+                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.Blocked == false);
             }
             if(name.Length> 0)
             {
-                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.FirstName.Contains(name) || u.Friend.LastName.Contains(name));
+                name = name.ToLower();
+                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.FirstName.ToLower().Contains(name) || u.Friend.LastName.ToLower().Contains(name));
             }
                 //friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
             return friendshipsToShow.OrderBy(u => u.FriendStatus);//.Where(u => u.DeniedFriend == deniedFriend);

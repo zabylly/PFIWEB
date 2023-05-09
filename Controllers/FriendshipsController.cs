@@ -11,7 +11,6 @@ namespace ChatManager.Controllers
 {
     public class FriendshipsController : Controller
     {
-        string name = "";
         // GET: Friendships
         public ActionResult Index()
         {
@@ -19,7 +18,7 @@ namespace ChatManager.Controllers
         }
         public void UpdateNameSearch(string search) 
         {
-            this.name = search;
+            Session["nameSearch"] = search;
         }
 
         public void UpdateSearch(string recherche)
@@ -43,7 +42,9 @@ namespace ChatManager.Controllers
                     }
                     blocked = paramString[paramString.Length - 1] == "1";
                 }
-                return PartialView(DB.Friendships.SortedFriendshipByCategory(OnlineUsers.GetSessionUser().Id, true,"",paramInt));
+                if (Session["nameSearch"] == null)
+                    Session["nameSearch"] = "";
+                return PartialView(DB.Friendships.SortedFriendshipByCategory(OnlineUsers.GetSessionUser().Id, blocked, Session["nameSearch"].ToString(), paramInt));
             }
             return null;
         }
