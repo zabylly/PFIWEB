@@ -21,22 +21,22 @@
                         switch (item.FriendStatus)
                         {
                             default:
-                                @Helper.Icon("sendInvitation", "fa-plus-circle", "Ajouter ami", "bottom", "green");
+                                @Helper.Icon("?idFriend=" + item.IdFriend, "addFriend fa-plus-circle", "Ajouter ami", "bottom", "green");
                                 break;
                             case 1:
-                                @Helper.Icon("addFriend", "fa-clock-o", "attente de réponse d'amitié", "bottom", "green");
+                                @Helper.Icon("addFriend", "addFriend fa-clock-o", "attente de réponse d'amitié", "bottom", "green");
                                 break;
                             case ChatManager.Models.Friendship.RequestReceved:
-                                @Helper.Icon("addFriend", "fas fa-check", "devenir ami", "bottom", "green");
+                                @Helper.Icon("addFriend", "addFriend fas fa-check", "devenir ami", "bottom", "green");
                                 break;
                             case ChatManager.Models.Friendship.Accepted:
-                                @Helper.Icon("addFriend", "fas fa-check-circle", "ami", "bottom", "green");
+                                @Helper.Icon("addFriend", "addFriend fas fa-check-circle", "ami", "bottom", "green");
                                 break;
                             case ChatManager.Models.Friendship.DeclineByYou:
                                 @Helper.Icon("nothing", "fa-times-circle", "Vous avez décliner l'amitié", "bottom", "red");
                                 break;
                             case ChatManager.Models.Friendship.DeclineByThem:
-                                @Helper.Icon("addFriend", "fa-times-circle", "La personne a décliner l'amitié", "bottom", "green");
+                                @Helper.Icon("addFriend", "addFriend fa-times-circle", "La personne a décliner l'amitié", "bottom", "green");
                                 break;
                         }
                     }
@@ -64,5 +64,12 @@
         </div>
     }
 }
+
+<script defer>
+$(".addFriend").click(function () {
+    friendShipStatus.command("@Url.Action("SendInvitation")" + this.id);
+    }
+);
+</script>
 
 
