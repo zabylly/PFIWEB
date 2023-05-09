@@ -32,7 +32,7 @@ namespace ChatManager.Models
             }
             if(name.Length> 0)
             {
-                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.FirstName.Contains("name") || u.Friend.LastName.Contains(name));
+                friendshipsToShow = friendshipsToShow.Where(u => u.Friend.FirstName.Contains(name) || u.Friend.LastName.Contains(name));
             }
                 //friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
             return friendshipsToShow.OrderBy(u => u.FriendStatus);//.Where(u => u.DeniedFriend == deniedFriend);
@@ -66,10 +66,13 @@ namespace ChatManager.Models
             }
             return friendshipsComplete;
         }
-        public Friendship SendFriendRequest(Friendship demandeAmis)
+        public Friendship SendInvitation(int id, int idFriend)
         {
             try
             {
+                Friendship demandeAmis = new Friendship();
+                demandeAmis.Id = id;
+                demandeAmis.IdFriend = idFriend;
                 OnlineUsers.SetHasChanged();
                 Friendship friendRelation = FindFriendRelation(demandeAmis);
                 if (friendRelation != null && friendRelation.FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps

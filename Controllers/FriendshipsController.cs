@@ -47,5 +47,9 @@ namespace ChatManager.Controllers
             }
             return null;
         }
+        public void SendInvitation(int idFriend)
+        {
+            DB.Friendships.SendInvitation(OnlineUsers.GetSessionUser().Id, idFriend);
+        }
     }
 }

@@ -51,6 +51,13 @@
                 friendShipStatus.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
             }
         );
+        $("#sendInvitation").click(
+           function () {
+                let userid = this.id.split('_')[1];
+                alert("aa");
+               friendShipStatus.confirmedCommand(this.title + ' ?', "@Url.Action("SendInvitation")" + "?idFriend=" + userid);
+           }
+        );
         // do not use
         $(".SwitchToUser").click(function () {
             window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
