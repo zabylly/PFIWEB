@@ -96,7 +96,7 @@ namespace ChatManager.Models
         }
         public Friendship AcceptFriendRequest(int id, int idFriend)
         {
-            Friendship friendship = this.Get(id,idFriend);
+            Friendship friendship = FindRelationById(id, idFriend);
             Friendship friendRelation = FindFriendRelation(friendship);
             friendRelation.FriendStatus = Friendship.Accepted;
             base.Update(friendRelation);
@@ -138,7 +138,7 @@ namespace ChatManager.Models
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }
-        public Friendship FindRelationById(int id,int friendId)
+        public Friendship FindRelationById(int id,int idFriend)
         {
             IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.Id == id && u.IdFriend == friendId);
             if (FriendTmp.Count() > 0) return FriendTmp.First();
