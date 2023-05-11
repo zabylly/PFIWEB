@@ -17,12 +17,13 @@ namespace ChatManager.Models
         public const int DeclineByThem = 5;
         public Friendship()
         {
-            Id = 0;
+            IdUser = 0;
             IdFriend = 0;
             FriendStatus = 0;
         }
 
         public int Id { get; set; }
+        public int IdUser { get; set; }
         public int IdFriend { get; set; }
         public int FriendStatus { get; set; }
         //0 rien
