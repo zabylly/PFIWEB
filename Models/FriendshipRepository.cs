@@ -59,7 +59,7 @@ namespace ChatManager.Models
                     if (!IsInRelation(friend) && friend.Verified && friend.Id != userId)
                     {
                         Friendship fship = new Friendship();
-                        fship.Id = userId;
+                        fship.IdUser = userId;
                         fship.IdFriend = friend.Id;
                         fship.FriendStatus = 0;
                         friendshipsComplete.Add(fship);
@@ -72,7 +72,7 @@ namespace ChatManager.Models
             try
             {
                 Friendship demandeAmis = new Friendship();
-                demandeAmis.Id = id;
+                demandeAmis.IdUser = id;
                 demandeAmis.IdFriend = idFriend;
                 Friendship friendRelation = FindFriendRelation(demandeAmis);
                 if (friendRelation != null && friendRelation.FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
@@ -82,10 +82,10 @@ namespace ChatManager.Models
                 demandeAmis.FriendStatus = Friendship.RequestSend;
                 demandeAmis.Id = base.Add(demandeAmis);
                 Friendship receveurDemande = new Friendship();
-                receveurDemande.Id= demandeAmis.IdFriend;
+                receveurDemande.IdUser = demandeAmis.IdFriend;
                 receveurDemande.IdFriend = demandeAmis.Id;
                 receveurDemande.FriendStatus = Friendship.RequestReceved;
-                base.Add(receveurDemande);
+                receveurDemande.Id = base.Add(receveurDemande);
                 return demandeAmis;
             }
             catch (Exception ex)
@@ -134,13 +134,13 @@ namespace ChatManager.Models
         //}
         public Friendship FindFriendRelation(Friendship friendship)
         {
-            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.Id == friendship.IdFriend && u.IdFriend == friendship.Id);
+            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.IdUser == friendship.IdFriend && u.IdFriend == friendship.Id);
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }
         public Friendship FindRelationById(int id,int idFriend)
         {
-            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.Id == id && u.IdFriend == friendId);
+            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.IdUser == id && u.IdFriend == idFriend);
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }

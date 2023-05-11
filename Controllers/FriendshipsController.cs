@@ -54,7 +54,7 @@ namespace ChatManager.Controllers
         }
         public void AccepteInvitation(int idFriend)
         {
-            DB.Friendships.AcceptFriendRequest()
+            //DB.Friendships.AcceptFriendRequest()
         }
         public void EnleveRequeteAmitie(int idFriend)
         {
