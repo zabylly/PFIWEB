@@ -138,9 +138,11 @@ namespace ChatManager.Models
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }
-        public Friendship FindRelationById()
+        public Friendship FindRelationById(int id,int friendId)
         {
-
+            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.Id == id && u.IdFriend == friendId);
+            if (FriendTmp.Count() > 0) return FriendTmp.First();
+            else return null;
         }
     }
 }
