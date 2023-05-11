@@ -28,7 +28,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/NotificationsHandler")
 
-    <script defer>
+<script defer>
     let friendshipStatus = new PartialRefresh("@Url.Action("GetFriendshipsList")", "friendshipsListContainer", 5, Callback);
 
         // renew checkbox change call back
@@ -49,26 +49,29 @@
         $(".DELETE_USER").click(
             function () {
                 let userid = this.id.split('_')[1];
-                friendShipStatus.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
+                friendshipStatus.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
             }
         );
         // do not use
         $(".SwitchToUser").click(function () {
             window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
-        })
+        });
         $('#Search').click(function () {
             friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
-        })
+        });
         $('#SearchText').bind("keypress keyup keydown", function () {
             friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
-        })
+        });
         function Callback() {
             $(".command").click(function () {
                 var url = $(this).attr("url");
                 var message = $(this).attr("message");
                 friendShipsStatus.confirmedCommand(message, url);
             });
+            $('.addFriend').click(function () {
+                friendshipStatus.command("@Url.Action("SendInvitation")" + this.id);
+            });
         }
-    </script>
+</script>
 }
 
