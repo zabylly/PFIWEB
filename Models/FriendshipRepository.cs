@@ -97,7 +97,6 @@ namespace ChatManager.Models
         }
         public Friendship AcceptFriendRequest(Friendship friendship)
         {
-            OnlineUsers.SetHasChanged();
             Friendship friendRelation = FindFriendRelation(friendship);
             friendRelation.FriendStatus = Friendship.Accepted;
             base.Update(friendRelation);
@@ -107,7 +106,6 @@ namespace ChatManager.Models
         }
         public Friendship DeclineFriendRequest(Friendship friendship)
         {
-            OnlineUsers.SetHasChanged();
             Friendship friendRelation = FindFriendRelation(friendship);
             friendRelation.FriendStatus = Friendship.DeclineByThem;
             base.Update(friendRelation);
@@ -118,7 +116,6 @@ namespace ChatManager.Models
         }
         public Friendship ReinviteBlockedFriend(Friendship friendship)
         {
-            OnlineUsers.SetHasChanged();
             Friendship friendRelation = FindFriendRelation(friendship);
             friendRelation.FriendStatus = Friendship.RequestReceved;
             base.Update(friendRelation);
