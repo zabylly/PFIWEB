@@ -74,7 +74,6 @@ namespace ChatManager.Models
                 Friendship demandeAmis = new Friendship();
                 demandeAmis.Id = id;
                 demandeAmis.IdFriend = idFriend;
-                OnlineUsers.SetHasChanged();
                 Friendship friendRelation = FindFriendRelation(demandeAmis);
                 if (friendRelation != null && friendRelation.FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
                 {
@@ -134,7 +133,9 @@ namespace ChatManager.Models
         //}
         public Friendship FindFriendRelation(Friendship friendship)
         {
-            return ToList().Where(u => u.Id == friendship.IdFriend && u.IdFriend == friendship.Id).First();
+            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.Id == friendship.IdFriend && u.IdFriend == friendship.Id);
+            if (FriendTmp.Count() > 0) return FriendTmp.First();
+            else return null;
         }
     }
 }

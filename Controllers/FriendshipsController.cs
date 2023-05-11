@@ -52,15 +52,19 @@ namespace ChatManager.Controllers
         {
             DB.Friendships.SendInvitation(OnlineUsers.GetSessionUser().Id, idFriend);
         }
-        public void AccepteInvitation(string idFriend)
+        public void AccepteInvitation(int idFriend)
         {
             
         }
-        public void RefuseAmitie(string idFriend)
+        public void EnleveRequeteAmitie(int idFriend)
+        {
+
+        }
+        public void RefuseAmitie(int idFriend)
         {
             
         }
-        public void TermineAmitie(string idFriend)
+        public void TermineAmitie(int idFriend)
         {
             
         }

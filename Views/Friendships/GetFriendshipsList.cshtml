@@ -24,19 +24,19 @@
                                 @Helper.Icon("?idFriend=" + item.IdFriend, "addFriend fa-plus-circle", "Ajouter ami", "bottom", "green");
                                 break;
                             case 1:
-                                @Helper.Icon("addFriend", "addFriend fa-clock-o", "attente de réponse d'amitié", "bottom", "green");
+                                @Helper.Icon("", "fa-clock-o", "attente de réponse d'amitié", "bottom", "green");
                                 break;
                             case ChatManager.Models.Friendship.RequestReceved:
-                                @Helper.Icon("addFriend", "addFriend fas fa-check", "devenir ami", "bottom", "green");
+                                @Helper.Icon("?idFriend=" + item.IdFriend, "acceptFriend fas fa-check", "devenir ami", "bottom", "green");
                                 break;
                             case ChatManager.Models.Friendship.Accepted:
-                                @Helper.Icon("addFriend", "addFriend fas fa-check-circle", "ami", "bottom", "green");
+                                @Helper.Icon("", " fas fa-check-circle", "ami", "bottom", "green");
                                 break;
                             case ChatManager.Models.Friendship.DeclineByYou:
-                                @Helper.Icon("nothing", "fa-times-circle", "Vous avez décliner l'amitié", "bottom", "red");
+                                @Helper.Icon("", "fa-times-circle", "Vous avez décliner l'amitié", "bottom", "red");
                                 break;
                             case ChatManager.Models.Friendship.DeclineByThem:
-                                @Helper.Icon("addFriend", "addFriend fa-times-circle", "La personne a décliner l'amitié", "bottom", "green");
+                                @Helper.Icon("", " fa-times-circle", "La personne a décliner l'amitié", "bottom", "green");
                                 break;
                         }
                     }
@@ -47,16 +47,16 @@
                 @{ switch (item.FriendStatus)
                     {
                         case ChatManager.Models.Friendship.RequestSend:
-                            @Helper.Icon("decline", "fa-times", "retirer la demande", "bottom", "red");
+                            @Helper.Icon("?idFriend=" + item.IdFriend, "removeRequestFriend fa-times", "retirer la demande", "bottom", "red");
                             break;
                         case ChatManager.Models.Friendship.RequestReceved:
-                            @Helper.Icon("denied", "fa-times", "décliner l'amitié", "bottom", "red");
+                            @Helper.Icon("?idFriend=" + item.IdFriend, "denied fa-times", "décliner l'amitié", "bottom", "red");
                             break;
                         case ChatManager.Models.Friendship.Accepted:
-                            @Helper.Icon("decline", "fa-times", "retirer l'amitié", "bottom", "red");
+                            @Helper.Icon("?idFriend=" + item.IdFriend, "stopFriendship fa-times", "retirer l'amitié", "bottom", "red");
                             break;
                         case ChatManager.Models.Friendship.DeclineByYou:
-                            @Helper.Icon("addFriend", "fas fa-plus-circle", "Ajouté ami", "bottom", "green");
+                            @Helper.Icon("?idFriend=" + item.IdFriend, "addFriend fas fa-plus-circle", "Ajouté ami", "bottom", "green");
                             break;
                     }
                 }

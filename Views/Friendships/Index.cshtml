@@ -69,7 +69,19 @@
                 friendShipsStatus.confirmedCommand(message, url);
             });
             $('.addFriend').click(function () {
-                friendshipStatus.command("@Url.Action("SendInvitation")" + this.id);
+                friendshipStatus.confirmedCommand("Voulez-vous devenir amis?", "@Url.Action("SendInvitation")" + this.id);
+            });
+            $('.acceptFriend').click(function () {
+                friendshipStatus.confirmedCommand("Voulez-vous accepter la demande d'ami?", "@Url.Action("AccepteInvitation")" + this.id);
+            });
+            $('.removeRequestFriend').click(function () {
+                friendshipStatus.confirmedCommand("Voulez-vous terminer l'amitié?", "@Url.Action("EnleveRequeteAmitie")" + this.id);
+            });
+            $('.denied').click(function () {
+                friendshipStatus.confirmedCommand("Voulez-vous refuser la demande d'ami?", "@Url.Action("RefuseAmitie")" + this.id);
+            });
+            $('.stopFriendship').click(function () {
+                friendshipStatus.confirmedCommand("Voulez-vous terminer l'amitié?", "@Url.Action("TermineAmitie")" + this.id);
             });
         }
 </script>
