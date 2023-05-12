@@ -69,6 +69,10 @@ namespace ChatManager.Models
             }
             return friendshipsComplete;
         }
+        public IEnumerable<Friendship> GetListFriends(int userId)
+        {
+            return ToList().Where(u => u.IdUser == userId && u.FriendStatus == Friendship.Accepted);
+        }
         public Friendship SendInvitation(int id, int idFriend)
         {
             try
