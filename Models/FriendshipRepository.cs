@@ -42,7 +42,7 @@ namespace ChatManager.Models
         }
         public List<Friendship> GetListFriendshipWithNullRelation(int userId)
         {
-            IEnumerable<Friendship> friendships = ToList().Where(u => u.Id == userId);
+            IEnumerable<Friendship> friendships = ToList().Where(u => u.IdUser == userId);
             List<Friendship> friendshipsComplete = new List<Friendship>(friendships);
             bool IsInRelation(User user)
             {
@@ -85,7 +85,7 @@ namespace ChatManager.Models
                 demandeAmis.Id = base.Add(demandeAmis);
                 Friendship receveurDemande = new Friendship();
                 receveurDemande.IdUser = demandeAmis.IdFriend;
-                receveurDemande.IdFriend = demandeAmis.Id;
+                receveurDemande.IdFriend = demandeAmis.IdUser;
                 receveurDemande.FriendStatus = Friendship.RequestReceved;
                 receveurDemande.Id = base.Add(receveurDemande);
                 OnlineUsers.AddNotification(idFriend, "Vous avez recu une demande d'amis");
@@ -176,7 +176,7 @@ namespace ChatManager.Models
         //}
         public Friendship FindFriendRelation(Friendship friendship)
         {
-            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.IdUser == friendship.IdFriend && u.IdFriend == friendship.Id);
+            IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.IdUser == friendship.IdFriend && u.IdFriend == friendship.IdUser);
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }
