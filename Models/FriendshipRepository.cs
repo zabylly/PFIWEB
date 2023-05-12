@@ -81,6 +81,10 @@ namespace ChatManager.Models
                 {
                     AcceptFriendRequest(id, idFriend);
                 }
+                if(friendRelation != null && friendRelation.FriendStatus == Friendship.DeclineByThem)
+                {
+                    ReinviteBlockedFriend(id, idFriend);
+                }
                 demandeAmis.FriendStatus = Friendship.RequestSend;
                 demandeAmis.Id = base.Add(demandeAmis);
                 Friendship receveurDemande = new Friendship();
@@ -115,10 +119,11 @@ namespace ChatManager.Models
             }
             return null;
         }
-        public Friendship DeclineFriendRequest(Friendship friendship)
+        public Friendship DeclineFriendRequest(int id,int idFriend)
         {
             try
             {
+                Friendship friendship = FindRelationById(id, idFriend);
                 Friendship friendRelation = FindFriendRelation(friendship);
                 friendRelation.FriendStatus = Friendship.DeclineByThem;
                 base.Update(friendRelation);
@@ -149,31 +154,25 @@ namespace ChatManager.Models
 
         }
 
-        public Friendship ReinviteBlockedFriend(Friendship friendship)
+        public Friendship ReinviteBlockedFriend(int id,int idFriend)
         {
             try
             {
+                Friendship friendship = FindRelationById(id, idFriend);
                 Friendship friendRelation = FindFriendRelation(friendship);
-            friendRelation.FriendStatus = Friendship.RequestReceved;
-            base.Update(friendRelation);
-            friendship.FriendStatus = Friendship.RequestSend;
-            base.Update(friendship);
-            return friendship;
+                friendRelation.FriendStatus = Friendship.RequestReceved;
+                base.Update(friendRelation);
+                friendship.FriendStatus = Friendship.RequestSend;
+                base.Update(friendship);
+                return friendship;
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
             }
+            return null;
 
         }
-        //public Friendship RemoveFriendRequest(Friendship friendship)
-        //{
-        //    OnlineUsers.SetHasChanged();
-        //    Friendship friendRelation = FindFriendRelation(friendship);
-        //    base.Delete(friendRelation.Id);
-        //    base.Delete(friendship.Id);
-        //    return friendship;
-        //}
         public Friendship FindFriendRelation(Friendship friendship)
         {
             IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.IdUser == friendship.IdFriend && u.IdFriend == friendship.IdUser);

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using static System.Collections.Specialized.BitVector32;
 
 namespace ChatManager.Controllers
@@ -12,6 +13,7 @@ namespace ChatManager.Controllers
     public class FriendshipsController : Controller
     {
         // GET: Friendships
+        int id = OnlineUsers.GetSessionUser().Id;
         public ActionResult Index()
         {
             return View();
@@ -50,22 +52,29 @@ namespace ChatManager.Controllers
         }
         public void SendInvitation(int idFriend)
         {
-            DB.Friendships.SendInvitation(OnlineUsers.GetSessionUser().Id, idFriend);
+
+            DB.Friendships.SendInvitation(id, idFriend);
+            OnlineUsers.AddNotification(id, "Demande d'amis envoyé");
         }
         public void AccepteInvitation(int idFriend)
         {
-            DB.Friendships.AcceptFriendRequest(OnlineUsers.GetSessionUser().Id, idFriend);
+            DB.Friendships.AcceptFriendRequest(id, idFriend);
+            OnlineUsers.AddNotification(id, "Demande d'amis accepté");
         }
         public void EnleveRequeteAmitie(int idFriend)
         {
+            DB.Friendships.RemoveRelation(id, idFriend);
+            OnlineUsers.AddNotification(id, "Demande d'amis annulé");
         }
         public void RefuseAmitie(int idFriend)
         {
-            
+            DB.Friendships.DeclineFriendRequest(id, idFriend);
+            OnlineUsers.AddNotification(id, "Demande d'amis refusé");
         }
         public void TermineAmitie(int idFriend)
         {
-            
+            DB.Friendships.DeclineFriendRequest(id, idFriend);
+            OnlineUsers.AddNotification(id, "Amis retiré");
         }
     }
 }
