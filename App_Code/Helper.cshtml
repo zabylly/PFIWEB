@@ -237,11 +237,11 @@
          title="@TooltipMessage">
     </div>
 }
-@helper Image(string url, string cssClass)
+@helper Image(string url, string cssClass, string style = "")
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     url = Url.Content(url);
-    <div class="@cssClass" style="background:url(@url);"></div>
+    <div class="@cssClass" style="background:url(@url); @style"></div>
 }
 @helper CountrySelector(string controlId, string selectedCode)
 {
