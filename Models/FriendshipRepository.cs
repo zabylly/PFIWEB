@@ -164,7 +164,7 @@ namespace ChatManager.Models
             {
                 System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
             }
-
+            return null;
         }
         //public Friendship RemoveFriendRequest(Friendship friendship)
         //{
