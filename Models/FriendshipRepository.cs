@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Services.Description;
 
 namespace ChatManager.Models
 {
@@ -86,6 +87,7 @@ namespace ChatManager.Models
                 receveurDemande.IdFriend = demandeAmis.IdUser;
                 receveurDemande.FriendStatus = Friendship.RequestReceved;
                 receveurDemande.Id = base.Add(receveurDemande);
+                OnlineUsers.AddNotification(idFriend, "Vous avez recu une demande d'amis");
                 return demandeAmis;
             }
             catch (Exception ex)
