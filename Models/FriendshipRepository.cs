@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Services.Description;
 
@@ -10,7 +11,7 @@ namespace ChatManager.Models
     public class FriendshipRepository : Repository<Friendship>
     {
         //missing blocked, mais doit être filtrer a travers User pas Friendship
-        public IEnumerable<Friendship> SortedFriendshipByCategory(int userId, bool showAccountBlocked,string name,params int[] relationToShow)
+        public IEnumerable<Friendship> SortedFriendshipByCategory(int userId, bool showAccountBlocked, string name, params int[] relationToShow)
         {
             IEnumerable<Friendship> allFriendship = GetListFriendshipWithNullRelation(userId);
             IEnumerable<Friendship> friendshipsToShow = new List<Friendship>();
@@ -25,18 +26,18 @@ namespace ChatManager.Models
             }
             else
             {
-                friendshipsToShow= allFriendship;
+                friendshipsToShow = allFriendship;
             }
-            if(!showAccountBlocked)
+            if (!showAccountBlocked)
             {
                 friendshipsToShow = friendshipsToShow.Where(u => u.Friend.Blocked == false);
             }
-            if(name.Length> 0)
+            if (name.Length > 0)
             {
                 name = name.ToLower();
                 friendshipsToShow = friendshipsToShow.Where(u => u.Friend.FirstName.ToLower().Contains(name) || u.Friend.LastName.ToLower().Contains(name));
             }
-                //friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
+            //friendshipsToShow = friendshipsToShow.Where(u => u.FriendStatus != Friendship.Accepted);
             return friendshipsToShow.OrderBy(u => u.FriendStatus);//.Where(u => u.DeniedFriend == deniedFriend);
         }
         public List<Friendship> GetListFriendshipWithNullRelation(int userId)
@@ -48,23 +49,23 @@ namespace ChatManager.Models
 
                 foreach (Friendship friendship in friendships)
                 {
-                    if(friendship.IdFriend == user.Id) return true;
+                    if (friendship.IdFriend == user.Id) return true;
                 }
                 return false;
             }
 
- 
+
 
             foreach (User friend in DB.Users.ToList())
             {
-                    if (!IsInRelation(friend) && friend.Verified && friend.Id != userId)
-                    {
-                        Friendship fship = new Friendship();
-                        fship.IdUser = userId;
-                        fship.IdFriend = friend.Id;
-                        fship.FriendStatus = 0;
-                        friendshipsComplete.Add(fship);
-                    }
+                if (!IsInRelation(friend) && friend.Verified && friend.Id != userId)
+                {
+                    Friendship fship = new Friendship();
+                    fship.IdUser = userId;
+                    fship.IdFriend = friend.Id;
+                    fship.FriendStatus = 0;
+                    friendshipsComplete.Add(fship);
+                }
             }
             return friendshipsComplete;
         }
@@ -78,7 +79,7 @@ namespace ChatManager.Models
                 Friendship friendRelation = FindFriendRelation(demandeAmis);
                 if (friendRelation != null && friendRelation.FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
                 {
-                    AcceptFriendRequest(id,idFriend);
+                    AcceptFriendRequest(id, idFriend);
                 }
                 demandeAmis.FriendStatus = Friendship.RequestSend;
                 demandeAmis.Id = base.Add(demandeAmis);
@@ -98,32 +99,71 @@ namespace ChatManager.Models
         }
         public Friendship AcceptFriendRequest(int id, int idFriend)
         {
-            Friendship friendship = FindRelationById(id, idFriend);
-            Friendship friendRelation = FindFriendRelation(friendship);
-            friendRelation.FriendStatus = Friendship.Accepted;
-            base.Update(friendRelation);
-            friendship.FriendStatus = Friendship.Accepted;
-            base.Update(friendship);
-            return friendship;
+            try
+            {
+                Friendship friendship = FindRelationById(id, idFriend);
+                Friendship friendRelation = FindFriendRelation(friendship);
+                friendRelation.FriendStatus = Friendship.Accepted;
+                base.Update(friendRelation);
+                friendship.FriendStatus = Friendship.Accepted;
+                base.Update(friendship);
+                return friendship;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
+            }
+            return null;
         }
         public Friendship DeclineFriendRequest(Friendship friendship)
         {
-            Friendship friendRelation = FindFriendRelation(friendship);
-            friendRelation.FriendStatus = Friendship.DeclineByThem;
-            base.Update(friendRelation);
-            friendship.FriendStatus = Friendship.DeclineByYou;
-            base.Update(friendship);
-            return friendship;
+            try
+            {
+                Friendship friendRelation = FindFriendRelation(friendship);
+                friendRelation.FriendStatus = Friendship.DeclineByThem;
+                base.Update(friendRelation);
+                friendship.FriendStatus = Friendship.DeclineByYou;
+                base.Update(friendship);
+                return friendship;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
+            }
+            return null;
 
         }
+        public void RemoveRelation(int id, int idFriend)
+        {
+            try
+            {
+                Friendship friendship = FindRelationById(id, idFriend);
+                Friendship friendRelation = FindFriendRelation(friendship);
+                base.Delete(friendship.Id);
+                base.Delete(friendRelation.Id);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
+            }
+
+        }
+
         public Friendship ReinviteBlockedFriend(Friendship friendship)
         {
-            Friendship friendRelation = FindFriendRelation(friendship);
+            try
+            {
+                Friendship friendRelation = FindFriendRelation(friendship);
             friendRelation.FriendStatus = Friendship.RequestReceved;
             base.Update(friendRelation);
             friendship.FriendStatus = Friendship.RequestSend;
             base.Update(friendship);
             return friendship;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Frienship Request Failed : Message - {ex.Message}");
+            }
 
         }
         //public Friendship RemoveFriendRequest(Friendship friendship)
@@ -140,7 +180,7 @@ namespace ChatManager.Models
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }
-        public Friendship FindRelationById(int id,int idFriend)
+        public Friendship FindRelationById(int id, int idFriend)
         {
             IEnumerable<Friendship> FriendTmp = ToList().Where(u => u.IdUser == id && u.IdFriend == idFriend);
             if (FriendTmp.Count() > 0) return FriendTmp.First();
