@@ -133,6 +133,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MessageRepository.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Friendship.cs" />
     <Compile Include="Models\FriendshipRepository.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -273,7 +275,7 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Friendships\GetFriendshipsList.cshtml" />
     <Content Include="Views\Chat\GetChatLog.cshtml" />
-    <Content Include="Views\Chat\GetFriend.cshtml" />
+    <Content Include="Views\Chat\GetUserOnline.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
