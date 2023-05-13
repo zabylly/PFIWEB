@@ -14,8 +14,13 @@
 <hr />
 @if (ViewBag.Recipient != null)
 {
+    DateTime datePrecedante = Model.First().DateSent;
     foreach (ChatManager.Models.Message item in Model)
     {
+        if((item.DateSent - datePrecedante).TotalMinutes > 30)
+        {
+            @Helper.When(item.DateSent);
+        };
         string classe;
         if (item.IdRecever == ViewBag.Recipiant.Id) { classe = "receiver"; }
         else { classe = "sender"; }

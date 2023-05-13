@@ -9,6 +9,7 @@ namespace ChatManager.Controllers
 {
     public class ChatController : Controller
     {
+        int id = OnlineUsers.GetSessionUser().Id;
         // GET: Chat
         public ActionResult Index()
         {
@@ -21,7 +22,7 @@ namespace ChatManager.Controllers
 
         public ActionResult GetFriend(bool forceRefresh = false)
         {
-            if (forceRefresh || OnlineUsers.HasChanged() || new FriendshipRepository().HasChanged)
+            if (forceRefresh || OnlineUsers.HasChanged() || DB.Friendships.HasChanged)
             {
                 return PartialView(DB.Friendships.GetListFriends(OnlineUsers.GetSessionUser().Id));
             }
@@ -29,7 +30,7 @@ namespace ChatManager.Controllers
         }
         public ActionResult GetChatLog(bool forceRefresh = false)
         {
-            if (forceRefresh)
+            if (forceRefresh || OnlineUsers.HasChanged() || DB.Message.HasChanged)
             {
                 if (Session["idFriendChat"] != null)
                 {
@@ -44,10 +45,10 @@ namespace ChatManager.Controllers
             }
             return null;
         }
-
         public void AddMessage(string message)
         {
             DB.Message.SaveMessage(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"], message);
+
         }
     }
 }
