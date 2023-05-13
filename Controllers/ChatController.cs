@@ -42,8 +42,6 @@ namespace ChatManager.Controllers
                     ViewBag.Recipient = null;
                     return PartialView(null);
                 }
-                    
-                
             }
             return null;
         }

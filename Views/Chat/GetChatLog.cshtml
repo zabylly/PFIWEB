@@ -11,7 +11,7 @@
         <h4>Sélectionnez un ami...</h4>
     }
 </div>
-@if (Model != null)
+@if (ViewBag.Recipient != null)
 {
     foreach (ChatManager.Models.Message item in Model)
     {
