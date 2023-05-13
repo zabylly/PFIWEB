@@ -83,11 +83,11 @@ namespace ChatManager.Models
                 Friendship friendRelation = FindFriendRelation(demandeAmis);
                 if (friendRelation != null && friendRelation.FriendStatus == Friendship.RequestSend)//si l'autre amis ta envoyer une requete en meme temps
                 {
-                    AcceptFriendRequest(id, idFriend);
+                    return AcceptFriendRequest(id, idFriend);
                 }
                 if(friendRelation != null && friendRelation.FriendStatus == Friendship.DeclineByThem)
                 {
-                    ReinviteBlockedFriend(id, idFriend);
+                    return ReinviteBlockedFriend(id, idFriend);
                 }
                 demandeAmis.FriendStatus = Friendship.RequestSend;
                 demandeAmis.Id = base.Add(demandeAmis);
