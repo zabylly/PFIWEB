@@ -1,1 +1,28 @@
-﻿
+﻿@model IEnumerable<ChatManager.Models.Message>
+
+<div>
+    @if (ViewBag.Recipient != null)
+    {
+        <h4>Coversation avec</h4>
+        @Helper.AvatarUserIcon(ViewBag.Recipient);
+    }
+    @if (ViewBag.Recipient == null)
+    {
+        <h4>Sélectionnez un ami...</h4>
+    }
+</div>
+@if (Model != null)
+{
+    foreach (ChatManager.Models.Message item in Model)
+    {
+        string classe;
+        if (item.IdRecever == ViewBag.Recipiant.Id) { classe = "receiver"; }
+        else { classe = "sender"; }
+
+        <div id="?idMessage=@item.Id" class="message @classe userContainer" style="font-size:14px;">
+            <p>@item.Text</p>
+        </div>
+    }
+}
+
+
