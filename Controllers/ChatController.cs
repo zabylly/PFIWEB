@@ -32,7 +32,19 @@ namespace ChatManager.Controllers
         {
             if (forceRefresh || OnlineUsers.HasChanged() || DB.Message.HasChanged)
             {
-                DB.Message.GetMessageChat(2,2).First().DateSent= DateTime.Now;
+                if (Request.Cookies["idFriendChat"] != null)
+                {
+                    ViewBag.Recipient = DB.Users.Get((int)Session["idFriendChat"]);
+                    return PartialView(DB.Message.GetMessageChat(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"]));
+                }
+                    
+                else
+                {
+                    ViewBag.Recipient = null;
+                    return PartialView(null);
+                }
+                    
+                
             }
             return null;
         }
