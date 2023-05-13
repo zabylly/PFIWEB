@@ -44,5 +44,10 @@ namespace ChatManager.Controllers
             }
             return null;
         }
+
+        public void AddMessage(string message)
+        {
+            DB.Message.SaveMessage(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"], message);
+        }
     }
 }

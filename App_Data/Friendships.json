@@ -1,1 +1,26 @@
-[{"Id":1,"IdUser":1,"IdFriend":2,"FriendStatus":3},{"Id":2,"IdUser":2,"IdFriend":1,"FriendStatus":3},{"Id":3,"IdUser":1,"IdFriend":3,"FriendStatus":3},{"Id":4,"IdUser":3,"IdFriend":1,"FriendStatus":3}]
+[
+  {
+    "Id": 1,
+    "IdUser": 1,
+    "IdFriend": 2,
+    "FriendStatus": 3
+  },
+  {
+    "Id": 2,
+    "IdUser": 2,
+    "IdFriend": 1,
+    "FriendStatus": 3
+  },
+  {
+    "Id": 3,
+    "IdUser": 1,
+    "IdFriend": 3,
+    "FriendStatus": 3
+  },
+  {
+    "Id": 4,
+    "IdUser": 3,
+    "IdFriend": 1,
+    "FriendStatus": 3
+  }
+]

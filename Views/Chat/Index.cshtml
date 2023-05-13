@@ -8,12 +8,15 @@
     <div style="margin: 4px; border: 1px solid lightgray; ">
         <div id="friendList"></div>
     </div>
-    <div>
+    <div style="width:100% !important; max-width:1000px !important;">
         <div style="margin: 4px; border: 1px solid lightgray; ">
             <div id="chatLog"></div>
         </div>
         <div style="margin: 4px; border: 1px solid lightgray;">
-            <div id="writingBar"></div>
+            <div id="writingBar" style="display: grid; grid-template-columns: auto 30px; ">
+                <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="votre message...">
+                @Helper.Icon("send", "fa-paper-plane", "Envoyer")
+            </div>
         </div>
     </div>
 </div>
@@ -23,26 +26,31 @@
     @Scripts.Render("~/bundles/NotificationsHandler")
 
 <script defer>
-        let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendList", 5, CallbackF);
-        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "chatLog", 5, CallbackC);
+    let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendList", 5, CallbackF);
+    let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "chatLog", 5, CallbackC);
 
-        function CallbackF() {
-            $(".command").click(function () {
-                var url = $(this).attr("url");
-                var message = $(this).attr("message");
-                friendListRefresh.confirmedCommand(message, url);
-            });
-            $('.Friend').click(function () {
-                messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
-            });
-        }
-        function CallbackC() {
-            $(".command").click(function () {
-                var url = $(this).attr("url");
-                var message = $(this).attr("message");
-                messageRefresh.confirmedCommand(message, url);
-            });
-        }
+    $("#send").click(
+        function () {
+            messageRefresh.command("@Url.Action("UpdateChatLog")" + "?message=" + $("#message").val())
+        });
+
+    function CallbackF() {
+        $(".command").click(function () {
+            var url = $(this).attr("url");
+            var message = $(this).attr("message");
+            friendListRefresh.confirmedCommand(message, url);
+        });
+        $('.Friend').click(function () {
+            messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
+        });
+    }
+    function CallbackC() {
+        $(".command").click(function () {
+            var url = $(this).attr("url");
+            var message = $(this).attr("message");
+            messageRefresh.confirmedCommand(message, url);
+        });
+    }
 </script>
 }
 
