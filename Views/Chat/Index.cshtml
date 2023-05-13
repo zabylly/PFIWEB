@@ -23,46 +23,25 @@
     @Scripts.Render("~/bundles/NotificationsHandler")
 
 <script defer>
-        let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendList", 5, Callback);
-        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "chatLog", 5, Callback);
+        let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendList", 5, CallbackF);
+        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "chatLog", 5, CallbackC);
 
-        // renew checkbox change call back
-        $(".rechercheFriendship").change(UpdateSearch);
-        $("#userBlocked").change(UpdateSearch);
-
-        function UpdateSearch() {
-            var checkedValue = "";
-                var inputElements = document.getElementsByClassName('rechercheFriendship');
-                for (var i = 0; inputElements[i]; ++i) {
-                    if (inputElements[i].checked) {
-                        checkedValue += inputElements[i].value + "_";
-                    }
-                }
-                checkedValue += document.getElementById('userBlocked').checked ? '1' : '0';
-                friendshipStatus.command("@Url.Action("UpdateSearch")" + "?recherche=" + checkedValue)
-        }
-        $(".DELETE_USER").click(
-            function () {
-                let userid = this.id.split('_')[1];
-                friendshipStatus.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
-            }
-        );
-        // do not use
-        $(".SwitchToUser").click(function () {
-            window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
-        });
-        $('#SearchText').bind("keypress keyup keydown", function () {
-            friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
-        });
-        function Callback() {
+        function CallbackF() {
             $(".command").click(function () {
                 var url = $(this).attr("url");
                 var message = $(this).attr("message");
-                friendShipsStatus.confirmedCommand(message, url);
+                friendListRefresh.confirmedCommand(message, url);
             });
             $('.Friend').click(function () {
                 messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
-        });
+            });
+        }
+        function CallbackC() {
+            $(".command").click(function () {
+                var url = $(this).attr("url");
+                var message = $(this).attr("message");
+                messageRefresh.confirmedCommand(message, url);
+            });
         }
 </script>
 }
