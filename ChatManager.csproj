@@ -273,7 +273,7 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Friendships\GetFriendshipsList.cshtml" />
     <Content Include="Views\Chat\GetChatLog.cshtml" />
-    <Content Include="Views\Chat\GetUserOnline.cshtml" />
+    <Content Include="Views\Chat\GetFriend.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

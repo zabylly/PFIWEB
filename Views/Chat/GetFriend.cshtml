@@ -1,0 +1,9 @@
+﻿@model IEnumerable<ChatManager.Models.Friendship>
+
+@foreach (ChatManager.Models.Friendship item in Model)
+{
+    <div class="userContainer" style="font-size:14px;" tilte="@item.Friend.GetFullName()">
+        @Helper.AvatarUser(item.Friend, "UserSmallAvatar")
+    </div>
+}
+
