@@ -12,7 +12,7 @@
     }
 </div>
 <hr />
-@if (ViewBag.Recipient != null)
+@if (ViewBag.Recipient != null && Model.Count() > 0)
 {
     DateTime datePrecedante = Model.First().DateSent;
     foreach (ChatManager.Models.Message item in Model)
@@ -22,7 +22,7 @@
             @Helper.When(item.DateSent);
         };
         string classe;
-        if (item.IdRecever == ViewBag.Recipiant.Id) { classe = "receiver"; }
+        if (item.IdRecever == ViewBag.Recipient.Id) { classe = "receiver"; }
         else { classe = "sender"; }
 
         <div id="?idMessage=@item.Id" class="message @classe userContainer" style="font-size:14px;">

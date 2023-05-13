@@ -31,7 +31,8 @@
 
     $("#send").click(
         function () {
-            messageRefresh.command("@Url.Action("UpdateChatLog")" + "?message=" + $("#message").val())
+            messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
+            $("#message").val("");
         });
 
     function CallbackF() {
