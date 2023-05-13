@@ -30,7 +30,7 @@ namespace ChatManager.Controllers
 
         public ActionResult GetFriendshipsList(bool forceRefresh = false)
         {
-            if (forceRefresh || OnlineUsers.HasChanged() || new FriendshipRepository().HasChanged)
+            if (forceRefresh || OnlineUsers.HasChanged() || DB.Friendships.HasChanged)
             {
                 int[] paramInt = null;
                 bool blocked = true;
