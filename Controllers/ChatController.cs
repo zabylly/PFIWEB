@@ -29,14 +29,13 @@ namespace ChatManager.Controllers
         }
         public ActionResult GetChatLog(bool forceRefresh = false)
         {
-            if (forceRefresh || OnlineUsers.HasChanged() || new FriendshipRepository().HasChanged)
+            if (forceRefresh)
             {
-                if (Request.Cookies["idFriendChat"] != null)
+                if (Session["idFriendChat"] != null)
                 {
                     ViewBag.Recipient = DB.Users.Get((int)Session["idFriendChat"]);
                     return PartialView(DB.Message.GetMessageChat(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"]));
                 }
-                    
                 else
                 {
                     ViewBag.Recipient = null;
