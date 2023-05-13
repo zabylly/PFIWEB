@@ -13,7 +13,7 @@
                 </div>
                 <div class="sendMessageLayout">
                     <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
-                    <span id="send" class="icon fa fa-paper-plane" style="color: blue;" title="Envoyer" data-placement="bottom">
+                    @Helper.Icon("send", "fa-paper-plane", "Envoyer")
                     </span>
 
                 </div>
@@ -30,23 +30,38 @@ s
         let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendsListContainer", 5, CallbackF);
         let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
 
-        function CallbackF() {
-            $(".command").click(function () {
-                var url = $(this).attr("url");
-                var message = $(this).attr("message");
-                friendListRefresh.confirmedCommand(message, url);
-            });
-            $('.Friend').click(function () {
-                messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
-            });
+    $("#send").click(
+        function () {
+            addMessage();
+        });
+    $('#message').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addMessage();
         }
-        function CallbackC() {
-            $(".command").click(function () {
-                var url = $(this).attr("url");
-                var message = $(this).attr("message");
-                messageRefresh.confirmedCommand(message, url);
-            });
-        }
+    });
+    function addMessage() {
+        messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
+        $("#message").val("");
+    }
+
+    function CallbackF() {
+        $(".command").click(function () {
+            var url = $(this).attr("url");
+            var message = $(this).attr("message");
+            friendListRefresh.confirmedCommand(message, url);
+        });
+        $('.Friend').click(function () {
+            messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
+        });
+    }
+    function CallbackC() {
+        $(".command").click(function () {
+            var url = $(this).attr("url");
+            var message = $(this).attr("message");
+            messageRefresh.confirmedCommand(message, url);
+        });
+    }
 </script>
 }
 

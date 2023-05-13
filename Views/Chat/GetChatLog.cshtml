@@ -11,7 +11,8 @@
         <h4>Sélectionnez un ami...</h4>
     }
 </div>
-@if (ViewBag.Recipient != null)
+<hr />
+@if (ViewBag.Recipient != null && Model.Count() > 0)
 {
     if (Model.Any())
     {
@@ -22,10 +23,10 @@
             if ((item.DateSent - datePrecedante).TotalMinutes > 30)
             {
             @Helper.When(item.DateSent);
-            };
-            string classe;
-            if (item.IdRecever == ViewBag.Recipiant.Id) { classe = "receiver"; }
-            else { classe = "sender"; }
+        };
+        string classe;
+        if (item.IdRecever == ViewBag.Recipient.Id) { classe = "receiver"; }
+        else { classe = "sender"; }
 
         <div id="?idMessage=@item.Id" class="message @classe userContainer" style="font-size:14px;">
             <p>@item.Text</p>
