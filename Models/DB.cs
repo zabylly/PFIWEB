@@ -21,6 +21,7 @@ namespace ChatManager.Models
         }
         #endregion
         #region Repositories
+        public static MessageRepository Messsage { get; set; }
         public static FriendshipRepository Friendships { get; set; }
         public static Repository<Gender> Genders { get; set; }
         public static Repository<UserType> UserTypes { get; set; }
