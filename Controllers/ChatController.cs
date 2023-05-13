@@ -36,5 +36,9 @@ namespace ChatManager.Controllers
             }
             return null;
         }
+        public void SendText(int idRecever,string text) 
+        {
+           DB.Message.SaveMessage(id,idRecever,text);
+        }
     }
 }
