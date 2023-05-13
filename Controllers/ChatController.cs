@@ -14,6 +14,10 @@ namespace ChatManager.Controllers
         {
             return View();
         }
+        public void UpdateChatLog(int idFriend)
+        {
+            Session["idFriendChat"] = idFriend;
+        }
 
         public ActionResult GetFriend(bool forceRefresh = false)
         {
@@ -23,11 +27,11 @@ namespace ChatManager.Controllers
             }
             return null;
         }
-        public ActionResult GetMessage(bool forceRefresh = false)
+        public ActionResult GetChatLog(bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged() || new FriendshipRepository().HasChanged)
             {
-                return PartialView();
+                return PartialView(); //Session["idFriendChat"]
             }
             return null;
         }

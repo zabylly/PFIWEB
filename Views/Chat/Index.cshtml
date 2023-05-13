@@ -24,7 +24,7 @@
 
 <script defer>
         let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendList", 5, Callback);
-        let messageRefresh = new PartialRefresh("@Url.Action("GetFriendsList")", "chatLog", 5, Callback);
+        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "chatLog", 5, Callback);
 
         // renew checkbox change call back
         $(".rechercheFriendship").change(UpdateSearch);
@@ -51,9 +51,6 @@
         $(".SwitchToUser").click(function () {
             window.location = "/Accounts/SwitchToUser/" + $(this).attr("id");
         });
-        $('#Search').click(function () {
-            friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
-        });
         $('#SearchText').bind("keypress keyup keydown", function () {
             friendshipStatus.command("@Url.Action("UpdateNameSearch")" + "?search=" + $('#SearchText').val())
         });
@@ -63,6 +60,9 @@
                 var message = $(this).attr("message");
                 friendShipsStatus.confirmedCommand(message, url);
             });
+            $('.Friend').click(function () {
+                messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
+        });
         }
 </script>
 }

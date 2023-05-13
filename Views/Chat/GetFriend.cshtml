@@ -2,8 +2,8 @@
 
 @foreach (ChatManager.Models.Friendship item in Model)
 {
-    <div class="userContainer" style="font-size:14px;" tilte="@item.Friend.GetFullName()">
-        @Helper.AvatarUser(item.Friend, "UserSmallAvatar")
+    <div id="?idFriend=@item.IdFriend" class="Friend userContainer" style="font-size:14px;">
+        @Helper.AvatarUserIcon(item.Friend, "UserSmallAvatar")
     </div>
 }
 
