@@ -13,20 +13,24 @@
 </div>
 @if (ViewBag.Recipient != null)
 {
-    DateTime datePrecedante = Model.First().DateSent;
-    foreach (ChatManager.Models.Message item in Model)
+    if (Model.Any())
     {
-        if((item.DateSent - datePrecedante).TotalMinutes > 30)
+        DateTime datePrecedante = Model.First().DateSent;
+
+        foreach (ChatManager.Models.Message item in Model)
         {
+            if ((item.DateSent - datePrecedante).TotalMinutes > 30)
+            {
             @Helper.When(item.DateSent);
-        };
-        string classe;
-        if (item.IdRecever == ViewBag.Recipiant.Id) { classe = "receiver"; }
-        else { classe = "sender"; }
+            };
+            string classe;
+            if (item.IdRecever == ViewBag.Recipiant.Id) { classe = "receiver"; }
+            else { classe = "sender"; }
 
         <div id="?idMessage=@item.Id" class="message @classe userContainer" style="font-size:14px;">
             <p>@item.Text</p>
         </div>
+        }
     }
 }
 

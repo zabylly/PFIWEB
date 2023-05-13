@@ -4,27 +4,31 @@
     <h3>Salle de discussions</h3>
 </div>
 <hr />
-<div style="display: grid; grid-template-columns: 65px auto;">
-    <div style="margin: 4px; border: 1px solid lightgray; ">
-        <div id="friendList"></div>
-    </div>
-    <div>
-        <div style="margin: 4px; border: 1px solid lightgray; ">
-            <div id="chatLog"></div>
-        </div>
-        <div style="margin: 4px; border: 1px solid lightgray;">
-            <div id="writingBar"></div>
-        </div>
-    </div>
-</div>
+<div class="main">
+    <div style="display: grid; grid-template-columns: 60px auto; column-gap: 10px;">
+       <div class="friendsListContainer" id="friendsListContainer" title="Cliquez sur un de vos amis pour clavarder avec lui...">
+       </div>
+            <div>
+                <div class="messagesPanel" id="messagesPanel" title="Cliquez sur un de vos messages pour l'éditer...">
+                </div>
+                <div class="sendMessageLayout">
+                    <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
+                    <span id="send" class="icon fa fa-paper-plane" style="color: blue;" title="Envoyer" data-placement="bottom">
+                    </span>
 
+                </div>
+            </div>
+        </div>
+    </div>
+s
+    
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/NotificationsHandler")
 
 <script defer>
-        let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendList", 5, CallbackF);
-        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "chatLog", 5, CallbackC);
+        let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendsListContainer", 5, CallbackF);
+        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
 
         function CallbackF() {
             $(".command").click(function () {
