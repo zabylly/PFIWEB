@@ -1,1 +1,15 @@
-﻿
+﻿@model IEnumerable<ChatManager.Models.Message>
+
+
+@{
+    DateTime datePrecedante = Model.First().DateSent;
+    foreach (ChatManager.Models.Message item in Model)
+    {
+
+        if((item.DateSent - datePrecedante).TotalMinutes > 30)
+        {
+            @Helper.When(item.DateSent);
+        };
+    }
+}
+
