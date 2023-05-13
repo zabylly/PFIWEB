@@ -31,9 +31,18 @@
 
     $("#send").click(
         function () {
-            messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
-            $("#message").val("");
+            addMessage();
         });
+    $('#message').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (keycode == '13') {
+            addMessage();
+        }
+    });
+    function addMessage() {
+        messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
+        $("#message").val("");
+    }
 
     function CallbackF() {
         $(".command").click(function () {
