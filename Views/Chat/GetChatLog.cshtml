@@ -32,13 +32,9 @@
             else { classe = "sent"; }
             string classeLayout = classe + "Layout";
 
-            <div id="?idMessage=@item.Id" class="@classeLayout">
-                <div class=@classe title="14:57" id="sent_281" utc="-4">
-                    @foreach (string mot in item.Text.Split(' '))
-                    {
-                        <span class="token">@mot</span>
-                    }
-                </div>
+        <div id="?idMessage=@item.Id" class="@classeLayout">
+            <div class=@classe title="14:57" id="sent_281" utc="-4">
+                <p>@item.Text</p>
             </div>
         }
     }

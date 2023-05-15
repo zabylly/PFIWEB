@@ -6,22 +6,21 @@
 <hr />
 <div class="main">
     <div style="display: grid; grid-template-columns: 60px auto; column-gap: 10px;">
-       <div class="friendsListContainer" id="friendsListContainer" title="Cliquez sur un de vos amis pour clavarder avec lui...">
-       </div>
-            <div>
-                <div class="messagesPanel" id="messagesPanel" title="Cliquez sur un de vos messages pour l'éditer...">
-                </div>
-                <div class="sendMessageLayout">
-                    <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
-                    @Helper.Icon("send", "fa-paper-plane", "Envoyer")
-                    </span>
+        <div class="friendsListContainer" id="friendsListContainer" title="Cliquez sur un de vos amis pour clavarder avec lui...">
+        </div>
+        <div>
+            <div class="messagesPanel" id="messagesPanel" title="Cliquez sur un de vos messages pour l'éditer...">
+            </div>
+            <div class="sendMessageLayout">
+                <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
+                @Helper.Icon("send", "fa-paper-plane", "Envoyer")
+                </span>
 
-                </div>
             </div>
         </div>
     </div>
-s
-    
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/NotificationsHandler")
@@ -53,6 +52,7 @@ s
         });
         $('.Friend').click(function () {
             messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
+            friendListRefresh.refresh(true);
         });
     }
     function CallbackC() {
@@ -60,6 +60,17 @@ s
             var url = $(this).attr("url");
             var message = $(this).attr("message");
             messageRefresh.confirmedCommand(message, url);
+        });
+        $('.sent').click(function () {
+            $('.sent').html('<p>' + this.val + '</p>');
+            $(this).html('<input type="text" class="modif" value="' + this.text + '">');
+            messageRefresh.pause();
+        });
+        $('.modif').keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
+            }
         });
     }
 </script>

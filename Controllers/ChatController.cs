@@ -50,5 +50,9 @@ namespace ChatManager.Controllers
             DB.Message.SaveMessage(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"], message);
 
         }
+        public void ChangeMessage(int id, string message)
+        {
+            DB.Message.ChangeMessage(id, message);
+        }
     }
 }
