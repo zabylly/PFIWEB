@@ -6,7 +6,7 @@
         <h4>Conversation avec</h4>
         <div class="userItem">
             @Helper.AvatarUserIcon(ViewBag.Recipient)
-            <div class="ellipsis">nom</div>
+            <div class="ellipsis">@ViewBag.Recipient.GetFullName()</div>
         </div>
     }
     @if (ViewBag.Recipient == null)
@@ -20,25 +20,26 @@
     if (Model.Any())
     {
         DateTime datePrecedante = Model.First().DateSent;
-
+        <div class="messageTime">@Helper.When(Model.First().DateSent)</div>
         foreach (ChatManager.Models.Message item in Model)
         {
             if ((item.DateSent - datePrecedante).TotalMinutes > 30)
             {
-            @Helper.When(item.DateSent);
+               <div class="messageTime"> @Helper.When(item.DateSent)</div>
             };
             string classe;
-            if (item.IdRecever == ViewBag.Recipient.Id) { classe = "received"; }
+            if (item.IdRecever != ViewBag.Recipient.Id) { classe = "received"; }
             else { classe = "sent"; }
+            string classeLayout = classe + "Layout";
 
-        <div id="?idMessage=@item.Id" class="message @classe."Layout" userContainer">
-            <div class=@classe title="14:57" id="sent_281" utc="-4">
-                @foreach (string mot in item.Text.Split(' '))
-                {
-                    <span class="token">@mot</span>
-                }
+            <div id="?idMessage=@item.Id" class="@classeLayout">
+                <div class=@classe title="14:57" id="sent_281" utc="-4">
+                    @foreach (string mot in item.Text.Split(' '))
+                    {
+                        <span class="token">@mot</span>
+                    }
+                </div>
             </div>
-        </div>
         }
     }
 }
