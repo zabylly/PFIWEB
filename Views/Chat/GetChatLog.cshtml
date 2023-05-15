@@ -1,10 +1,13 @@
 ﻿@model IEnumerable<ChatManager.Models.Message>
 
-<div>
+<div class="messagesHeader">
     @if (ViewBag.Recipient != null)
     {
-        <h4>Coversation avec</h4>
-        @Helper.AvatarUserIcon(ViewBag.Recipient);
+        <h4>Conversation avec</h4>
+        <div class="userItem">
+            @Helper.AvatarUserIcon(ViewBag.Recipient)
+            <div class="ellipsis">nom</div>
+        </div>
     }
     @if (ViewBag.Recipient == null)
     {
@@ -23,13 +26,18 @@
             if ((item.DateSent - datePrecedante).TotalMinutes > 30)
             {
             @Helper.When(item.DateSent);
-        };
-        string classe;
-        if (item.IdRecever == ViewBag.Recipient.Id) { classe = "receiver"; }
-        else { classe = "sender"; }
+            };
+            string classe;
+            if (item.IdRecever == ViewBag.Recipient.Id) { classe = "received"; }
+            else { classe = "sent"; }
 
-        <div id="?idMessage=@item.Id" class="message @classe userContainer" style="font-size:14px;">
-            <p>@item.Text</p>
+        <div id="?idMessage=@item.Id" class="message @classe."Layout" userContainer">
+            <div class=@classe title="14:57" id="sent_281" utc="-4">
+                @foreach (string mot in item.Text.Split(' '))
+                {
+                    <span class="token">@mot</span>
+                }
+            </div>
         </div>
         }
     }
