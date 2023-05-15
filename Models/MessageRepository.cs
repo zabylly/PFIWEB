@@ -30,5 +30,10 @@ namespace ChatManager.Models
             return null;
         }
 
+        public void ChangeMessage(int idMessage, string text)
+        {
+
+        }
+
     }
 }
