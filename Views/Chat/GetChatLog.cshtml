@@ -33,10 +33,7 @@
 
         <div id="?idMessage=@item.Id" class="message @classe."Layout" userContainer">
             <div class=@classe title="14:57" id="sent_281" utc="-4">
-                @foreach (string mot in item.Text.Split(' '))
-                {
-                    <span class="token">@mot</span>
-                }
+                <p>@item.Text</p>
             </div>
         </div>
         }
