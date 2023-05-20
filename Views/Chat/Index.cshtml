@@ -51,6 +51,7 @@
             friendListRefresh.confirmedCommand(message, url);
         });
         $('.Friend').click(function () {
+            messageRefresh.restart();
             messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
             friendListRefresh.refresh(true);
         });
@@ -62,8 +63,12 @@
             messageRefresh.confirmedCommand(message, url);
         });
         $('.sent p').click(function () {
-            $('.sent').html('<p>' + this.val + '</p>');
-            this.html('<input type="text" class="modif" value="' + this.text + '">');
+            var id = $(this).id;
+            $('.sent').each(function () {
+                if ($(this).id != id)
+                    $(this).html('<p>' + $(this).text() + '</p>');
+            })
+            $(this).html('<input type="text" class="modif" value="' + $(this).text() + '">');
             messageRefresh.pause();
         });
         $('.modif').keypress(function (event) {
