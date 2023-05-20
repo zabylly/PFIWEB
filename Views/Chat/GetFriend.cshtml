@@ -13,7 +13,7 @@
             userContainer = "selectedTarget";
         }
         <div class=@userContainer>
-            <span id="?idFriend=@item.IdFriend" class="Friend userContainer" style="position: absolute; width: 37px;"></span>
+            <span id="?idFriend=@item.IdFriend" class="Friend userContainer" style="position: absolute; width: 37px;" title="@item.Friend.GetFullName()"></span>
                 @Helper.AvatarUserIcon(item.Friend, "UserSmallAvatar")
 
         </div>

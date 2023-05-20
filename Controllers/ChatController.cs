@@ -19,10 +19,9 @@ namespace ChatManager.Controllers
         {
             Session["idFriendChat"] = idFriend;
         }
-
         public ActionResult GetFriend(bool forceRefresh = false)
         {
-            if (forceRefresh || OnlineUsers.HasChanged() || DB.Friendships.HasChanged)
+            if (forceRefresh || DB.Friendships.HasChanged || DB.Message.HasChanged)
             {
                 return PartialView(DB.Friendships.GetListFriends(OnlineUsers.GetSessionUser().Id));
             }
@@ -30,7 +29,7 @@ namespace ChatManager.Controllers
         }
         public ActionResult GetChatLog(bool forceRefresh = false)
         {
-            if (forceRefresh || OnlineUsers.HasChanged() || DB.Message.HasChanged)
+            if (forceRefresh || DB.Friendships.HasChanged || DB.Message.HasChanged)
             {
                 if (Session["idFriendChat"] != null)
                 {

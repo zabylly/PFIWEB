@@ -12,7 +12,7 @@ namespace ChatManager.Models
             return ToList().Where(u => u.IdSender == id && u.IdRecever == idFriend || u.IdSender == idFriend && u.IdRecever == id).OrderBy(u=>u.DateSent);      
         }
 
-        public string SaveMessage(int idSender, int idRecever, string text)
+        public void SaveMessage(int idSender, int idRecever, string text)
         {
             try
             {
@@ -27,12 +27,31 @@ namespace ChatManager.Models
             {
                 System.Diagnostics.Debug.WriteLine($" Message send failed : Message - {ex.Message}");
             }
-            return null;
         }
 
         public void ChangeMessage(int idMessage, string text)
         {
+            try
+            {
+                DB.Message.Get(idMessage).Text = text;  
 
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($" Message send failed : Message - {ex.Message}");
+            }
+        }
+        public void DeleteMessage(int idMessage, string text)
+        {
+            try
+            {
+                DB.Message.Get(idMessage).Text = text;
+
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($" Message send failed : Message - {ex.Message}");
+            }
         }
 
     }
