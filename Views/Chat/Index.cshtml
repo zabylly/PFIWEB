@@ -61,15 +61,15 @@
             var message = $(this).attr("message");
             messageRefresh.confirmedCommand(message, url);
         });
-        $('.sent').click(function () {
+        $('.sent p').click(function () {
             $('.sent').html('<p>' + this.val + '</p>');
-            $(this).html('<input type="text" class="modif" value="' + this.text + '">');
+            this.html('<input type="text" class="modif" value="' + this.text + '">');
             messageRefresh.pause();
         });
         $('.modif').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
-                messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
+                messageRefresh.command("@Url.Action("ChangeMessage")" + "?message=" + $("#message").val())
             }
         });
     }
