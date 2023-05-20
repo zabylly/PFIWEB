@@ -27,6 +27,7 @@
             {
                <div class="messageTime"> @Helper.When(item.DateSent)</div>
             };
+            datePrecedante = item.DateSent;
             string classe;
             if (item.IdRecever != ViewBag.Recipient.Id) { classe = "received"; }
             else { classe = "sent"; }
@@ -34,7 +35,7 @@
 
         <div id="?idMessage=@item.Id" class="@classeLayout">
             <div class=@classe title="14:57" id="sent_281" utc="-4">
-                <p>@item.Text</p>
+                <p>@Helper.ParseContent(@item.Text)</p>
             </div>
         </div>
         }
