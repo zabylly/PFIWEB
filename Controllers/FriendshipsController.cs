@@ -13,7 +13,7 @@ namespace ChatManager.Controllers
     public class FriendshipsController : Controller
     {
         // GET: Friendships
-        int id = OnlineUsers.GetSessionUser().Id;
+        [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
             return View();
@@ -27,10 +27,9 @@ namespace ChatManager.Controllers
         {
             Session["paramSearch"] = recherche;
         }
-
         public ActionResult GetFriendshipsList(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Friendships.HasChanged)
+            if (forceRefresh || DB.Friendships.HasChanged || OnlineUsers.HasChanged())
             {
                 int[] paramInt = null;
                 bool blocked = true;
@@ -53,28 +52,28 @@ namespace ChatManager.Controllers
         public void SendInvitation(int idFriend)
         {
 
-            DB.Friendships.SendInvitation(id, idFriend);
-            OnlineUsers.AddNotification(id, "Demande d'amis envoyé");
+            DB.Friendships.SendInvitation(OnlineUsers.GetSessionUser().Id, idFriend);
+            OnlineUsers.AddNotification(OnlineUsers.GetSessionUser().Id, "Demande d'amis envoyé");
         }
         public void AccepteInvitation(int idFriend)
         {
-            DB.Friendships.AcceptFriendRequest(id, idFriend);
-            OnlineUsers.AddNotification(id, "Demande d'amis accepté");
+            DB.Friendships.AcceptFriendRequest(OnlineUsers.GetSessionUser().Id, idFriend);
+            OnlineUsers.AddNotification(OnlineUsers.GetSessionUser().Id, "Demande d'amis accepté");
         }
         public void EnleveRequeteAmitie(int idFriend)
         {
-            DB.Friendships.RemoveRelation(id, idFriend);
-            OnlineUsers.AddNotification(id, "Demande d'amis annulé");
+            DB.Friendships.RemoveRelation(OnlineUsers.GetSessionUser().Id, idFriend);
+            OnlineUsers.AddNotification(OnlineUsers.GetSessionUser().Id, "Demande d'amis annulé");
         }
         public void RefuseAmitie(int idFriend)
         {
-            DB.Friendships.DeclineFriendRequest(id, idFriend);
-            OnlineUsers.AddNotification(id, "Demande d'amis refusé");
+            DB.Friendships.DeclineFriendRequest(OnlineUsers.GetSessionUser().Id, idFriend);
+            OnlineUsers.AddNotification(OnlineUsers.GetSessionUser().Id, "Demande d'amis refusé");
         }
         public void TermineAmitie(int idFriend)
         {
-            DB.Friendships.DeclineFriendRequest(id, idFriend);
-            OnlineUsers.AddNotification(id, "Amis retiré");
+            DB.Friendships.DeclineFriendRequest(OnlineUsers.GetSessionUser().Id, idFriend);
+            OnlineUsers.AddNotification(OnlineUsers.GetSessionUser().Id, "Amis retiré");
         }
     }
 }

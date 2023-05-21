@@ -9,8 +9,8 @@ namespace ChatManager.Controllers
 {
     public class ChatController : Controller
     {
-        int id = OnlineUsers.GetSessionUser().Id;
         // GET: Chat
+        [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
             return View();
@@ -19,9 +19,10 @@ namespace ChatManager.Controllers
         {
             Session["idFriendChat"] = idFriend;
         }
+        [OnlineUsers.UserAccess]
         public ActionResult GetFriend(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Friendships.HasChanged || DB.Message.HasChanged)
+            if (forceRefresh || OnlineUsers.HasChanged() || DB.Friendships.HasChanged)
             {
                 return PartialView(DB.Friendships.GetListFriends(OnlineUsers.GetSessionUser().Id));
             }

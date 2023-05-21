@@ -39,6 +39,11 @@
             addMessage();
         }
     });
+    $(document).on('keyup', function (event) {
+        if (event.key == "Escape") {
+            $("#message").val("");
+        }
+    });
     function addMessage() {
         messageRefresh.command("@Url.Action("AddMessage")" + "?message=" + $("#message").val())
         $("#message").val("");
