@@ -62,19 +62,27 @@
             var message = $(this).attr("message");
             messageRefresh.confirmedCommand(message, url);
         });
-        $('.sent p').click(function () {
+        $('.sent').click(function () {
             var id = $(this).id;
             $('.sent').each(function () {
-                if ($(this).id != id)
-                    $(this).html('<p>' + $(this).text() + '</p>');
+                if ($(this).id != id) {
+                    if ($(this).has("input")) {
+                        alert("alert");
+                        $(this).html('<p>' + $(this)[0].val() + '</p>');
+                    }
+                    else {
+                        $(this).html('<p>' + $(this).text().trim() + '</p>');
+                    } 
+                }
+                    //$(this).html('<p>' + $(this).text().trim() + '</p>');
             })
-            $(this).html('<input type="text" class="modif" value="' + $(this).text() + '">');
+            $(this).html('<input type="text" class="modif" id="' + $(this).id + '" value="' + $(this).text().trim() + '">');
             messageRefresh.pause();
         });
         $('.modif').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
-                messageRefresh.command("@Url.Action("ChangeMessage")" + "?message=" + $("#message").val())
+                messageRefresh.command("@Url.Action("ChangeMessage")" + "?idMessage=" + $(this).id + "&message=" + $("#message").val())
             }
         });
     }
