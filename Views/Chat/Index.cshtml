@@ -29,10 +29,7 @@
         let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendsListContainer", 5, CallbackF);
     let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
 
-    if ($(".messagesHeader h4")) {
-        console.log($(".messagesHeader"));
-    }
-    let currentTargetId = 0;
+    let currentTargetId = @ViewBag.Recipient;
     if (currentTargetId == 0)
         $("#sendMessagePanel").hide();
 
@@ -45,9 +42,6 @@
         })
     }
 
-    //if (true) { alert("truc true") };
-
-    //$("#sendMessagePanel").hide()
     let editing = false;
     function setEditing(value) {
         editing = value;
