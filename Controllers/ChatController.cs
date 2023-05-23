@@ -50,9 +50,13 @@ namespace ChatManager.Controllers
             DB.Message.SaveMessage(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"], message);
 
         }
-        public void ChangeMessage(int id, string message)
+        public void Update(int id, string message)
         {
             DB.Message.ChangeMessage(id, message);
+        }
+        public void Delete(int id)
+        {
+            DB.Message.Delete(id);
         }
     }
 }

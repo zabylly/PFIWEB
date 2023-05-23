@@ -25,7 +25,7 @@
         {
             if ((item.DateSent - datePrecedante).TotalMinutes > 30)
             {
-               <div class="messageTime"> @Helper.When(item.DateSent)</div>
+                <div class="messageTime"> @Helper.When(item.DateSent)</div>
             };
             datePrecedante = item.DateSent;
             string classe;
@@ -33,11 +33,25 @@
             else { classe = "sent"; }
             string classeLayout = classe + "Layout";
 
-        <div id="?idMessage=@item.Id" class="@classeLayout">
-            <div class=@classe title="14:57" id="sent_281" utc="-4">
-                <p>@Helper.ParseContent(@item.Text)</p>
+            <div id="?idMessage=@item.Id" class="@classeLayout">
+                <div class=@classe title="14:57" id="@("sent_"+@item.Id)" utc="-4">
+                    <p>@Helper.ParseContent(@item.Text)</p>
+                </div>
             </div>
-        </div>
+
+
+            if (item.IdRecever == ViewBag.Recipient.Id)
+            {
+                <div class="editMessage" id="@("edit_"+@item.Id)">
+
+                <input id="@item.Id" value="@item.Text" class="sent form-control">
+                <span id="@("update_"+@item.Id)" class="icon fa fa-check smallerIcon" title="Modifier ce message" data-placement="bottom">
+                </span>
+
+                <span id="@("delete_"+@item.Id)" class="icon fa fa-times smallerIcon" title="Effacer ce message" data-placement="bottom">
+                </span>
+            </div>
+            }
         }
     }
 }

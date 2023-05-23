@@ -16,12 +16,15 @@ namespace ChatManager.Models
         {
             try
             {
-                Message newMessage = new Message();
-                newMessage.IdSender = idSender;
-                newMessage.IdRecever = idRecever;
-                newMessage.Text = text;
-                base.Add(newMessage);
-                OnlineUsers.AddNotification(idRecever, "Vous avez recu un message de " + DB.Users.FindUser(idRecever).GetFullName()) ;
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    Message newMessage = new Message();
+                    newMessage.IdSender = idSender;
+                    newMessage.IdRecever = idRecever;
+                    newMessage.Text = text;
+                    base.Add(newMessage);
+                    OnlineUsers.AddNotification(idRecever, "Vous avez recu un message de " + DB.Users.FindUser(idRecever).GetFullName());
+                }
 
             }
             catch (Exception ex)
@@ -34,7 +37,11 @@ namespace ChatManager.Models
         {
             try
             {
-                DB.Message.Get(idMessage).Text = text;  
+
+                DB.Message.Get(idMessage).Text = text;
+
+                if (string.IsNullOrWhiteSpace(text))
+                    DeleteMessage(idMessage);
 
             }
             catch (Exception ex)
@@ -42,12 +49,11 @@ namespace ChatManager.Models
                 System.Diagnostics.Debug.WriteLine($" Message send failed : Message - {ex.Message}");
             }
         }
-        public void DeleteMessage(int idMessage, string text)
+        public void DeleteMessage(int idMessage)
         {
             try
             {
-                DB.Message.Get(idMessage).Text = text;
-
+                Delete(idMessage);
             }
             catch (Exception ex)
             {

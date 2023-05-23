@@ -11,7 +11,7 @@
         <div>
             <div class="messagesPanel" id="messagesPanel" title="Cliquez sur un de vos messages pour l'éditer...">
             </div>
-            <div class="sendMessageLayout">
+            <div class="sendMessageLayout" id="sendMessagePanel">
                 <input id="message" class="form-control" style="width:100% !important; max-width:1000px !important;" placeholder="Tapez votre message ici ..." title="Les urls d'image sont prises en compte.">
                 @Helper.Icon("send", "fa-paper-plane", "Envoyer")
                 </span>
@@ -28,7 +28,18 @@
 <script defer>
         let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendsListContainer", 5, CallbackF);
         let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
-
+    let editing = false;
+    function setEditing(value) {
+        editing = value;
+        if (editing) {
+            messageRefresh.pause();
+            $("#sendMessagePanel").hide()
+        }
+        else {
+            messageRefresh.restart();
+            $("#sendMessagePanel").show()
+        }
+    }
     $("#send").click(
         function () {
             addMessage();
@@ -57,12 +68,13 @@
         });
         $('.Friend').click(function () {
             messageRefresh.restart();
-            messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id)
+            messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id);
+            setEditing(false);
             friendListRefresh.refresh(true);
         });
     }
     function CallbackC() {
-        $(".command").click(function () {
+        @*$(".command").click(function () {
             var url = $(this).attr("url");
             var message = $(this).attr("message");
             messageRefresh.confirmedCommand(message, url);
@@ -80,6 +92,49 @@
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if (keycode == '13') {
                 messageRefresh.command("@Url.Action("ChangeMessage")" + "?message=" + $("#message").val())
+            }
+        });*@
+        $("#typing").hide();
+        $(".editMessage").hide();
+        $("#messagesPanel").scrollTop($("#messagesPanel")[0].scrollHeight + 100);
+
+        $(".contentImage").click(function (event) {
+            event.stopPropagation();
+        })
+        $("a").click(function (event) {
+            event.stopPropagation();
+        })
+        $(".sent").click(function () {
+            console.log(editing);
+            if (!editing) {
+                setEditing(true);
+                var message_id = $(this).attr("id").split("_")[1];
+                $("#edit_" + message_id).show();
+                $("#sent_" + message_id).hide();
+                $("#delete_" + message_id).click(function () {
+                    setEditing(false);
+                    messageRefresh.confirmedCommand("Effacer ce message", "/Chat/Delete/" + message_id);
+                })
+                $("#update_" + message_id).click(function () {
+                    setEditing(false);
+                    var message = $("#" + message_id).val();
+                    messageRefresh.command("/Chat/Update?id=" + message_id + "&message=" + message);
+                })
+                $('#' + message_id).keypress(function (event) {
+                    var keycode = (event.keyCode ? event.keyCode : event.which);
+                    if (keycode == '13') {
+                        setEditing(false);
+                        var message = $("#" + message_id).val();
+                        messageRefresh.command("/Chat/Update?id=" + message_id + "&message=" + message);
+                    }
+                });
+                $(document).on('keyup', function (event) {
+                    if (event.key == "Escape") {
+                        $("#edit_" + message_id).hide();
+                        $("#sent_" + message_id).show();
+                        setEditing(false);
+                    }
+                });
             }
         });
     }
