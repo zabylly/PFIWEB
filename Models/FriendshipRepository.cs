@@ -188,5 +188,10 @@ namespace ChatManager.Models
             if (FriendTmp.Count() > 0) return FriendTmp.First();
             else return null;
         }
+        public bool IsFriend(int idFriend)
+        {
+            var tmp = DB.Friendships.ToList().Where(u => u.IdUser == OnlineUsers.GetSessionUser().Id && u.IdFriend == idFriend && u.FriendStatus == 3);
+            return 1 == DB.Friendships.ToList().Where(u => u.IdUser == OnlineUsers.GetSessionUser().Id && u.IdFriend == idFriend && u.FriendStatus == 3).Count();
+        }
     }
 }

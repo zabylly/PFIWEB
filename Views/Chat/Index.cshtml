@@ -33,15 +33,6 @@
     if (currentTargetId == 0)
         $("#sendMessagePanel").hide();
 
-    function UpdateFriendsCallback() {
-        messagesPanelUpdater.refresh(true);
-        $(".unselectedTarget").click(function () {
-            var userId = $(this).attr("userid");
-            ajaxActionCall("/Chat/SetCurrentTarget/" + userId, () => { friendsPanelUpdater.refresh(true); messagesPanelUpdater.refresh(true); });
-            $("#sendMessagePanel").show();
-        })
-    }
-
     let editing = false;
     function setEditing(value) {
         editing = value;
