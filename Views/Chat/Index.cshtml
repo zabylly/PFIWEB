@@ -28,6 +28,25 @@
 <script defer>
         let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendsListContainer", 5, CallbackF);
     let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
+
+    if ($(".messagesHeader h4")) {
+        console.log($(".messagesHeader"));
+    }
+    let currentTargetId = 0;
+    if (currentTargetId == 0)
+        $("#sendMessagePanel").hide();
+
+    function UpdateFriendsCallback() {
+        messagesPanelUpdater.refresh(true);
+        $(".unselectedTarget").click(function () {
+            var userId = $(this).attr("userid");
+            ajaxActionCall("/Chat/SetCurrentTarget/" + userId, () => { friendsPanelUpdater.refresh(true); messagesPanelUpdater.refresh(true); });
+            $("#sendMessagePanel").show();
+        })
+    }
+
+    //if (true) { alert("truc true") };
+
     //$("#sendMessagePanel").hide()
     let editing = false;
     function setEditing(value) {
@@ -68,10 +87,9 @@
             friendListRefresh.confirmedCommand(message, url);
         });
         $('.Friend').click(function () {
-            messageRefresh.restart();
-            messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id);
+            ajaxActionCall("@Url.Action("UpdateChatLog")" + this.id, () => { friendListRefresh.refresh(true); messageRefresh.refresh(true); });
             setEditing(false);
-            $("#sendMessagePanel").show()
+            $("#sendMessagePanel").show();
             friendListRefresh.refresh(true);
         });
     }
@@ -91,7 +109,7 @@
                     }
                     else {
                         $(this).html('<p>' + $(this).text().trim() + '</p>');
-                    } 
+                    }
                 }
                     //$(this).html('<p>' + $(this).text().trim() + '</p>');
             })
