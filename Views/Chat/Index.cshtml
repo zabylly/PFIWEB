@@ -27,7 +27,8 @@
 
 <script defer>
         let friendListRefresh = new PartialRefresh("@Url.Action("GetFriend")", "friendsListContainer", 5, CallbackF);
-        let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
+    let messageRefresh = new PartialRefresh("@Url.Action("GetChatLog")", "messagesPanel", 5, CallbackC);
+    //$("#sendMessagePanel").hide()
     let editing = false;
     function setEditing(value) {
         editing = value;
@@ -70,6 +71,7 @@
             messageRefresh.restart();
             messageRefresh.command("@Url.Action("UpdateChatLog")" + this.id);
             setEditing(false);
+            $("#sendMessagePanel").show()
             friendListRefresh.refresh(true);
         });
     }
