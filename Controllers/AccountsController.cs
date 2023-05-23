@@ -238,11 +238,11 @@ namespace ChatManager.Controllers
 
         #region Profil
         [OnlineUsers.UserAccess]
-        public ActionResult Profil()
+        public ActionResult Profil(int id = -1)
         {
             OnlineUsers.GetSessionUser().AcceptNotification = true;
             ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
-            User userToEdit = OnlineUsers.GetSessionUser().Clone();
+            User userToEdit = id==-1?OnlineUsers.GetSessionUser().Clone():DB.Users.FindUser(id);
             if (userToEdit != null)
             {
                 Session["UnchangedPasswordCode"] = Guid.NewGuid().ToString().Substring(0, 12);
@@ -256,7 +256,7 @@ namespace ChatManager.Controllers
         [ValidateAntiForgeryToken()]
         public ActionResult Profil(User user)
         {
-            User currentUser = OnlineUsers.GetSessionUser();
+            User currentUser = DB.Users.FindUser(user.Id);
             user.Id = currentUser.Id;
             user.Verified = currentUser.Verified;
             user.UserTypeId = currentUser.UserTypeId;
