@@ -33,7 +33,7 @@ namespace ChatManager.Controllers
         {
             if (forceRefresh || DB.Friendships.HasChanged || DB.Message.HasChanged)
             {
-                if (Session["idFriendChat"] != null)
+                if (Session["idFriendChat"] != null && DB.Friendships.FindRelationById(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"]).FriendStatus == Friendship.Accepted)
                 {
                     ViewBag.Recipient = DB.Users.Get((int)Session["idFriendChat"]);
                     return PartialView(DB.Message.GetMessageChat(OnlineUsers.GetSessionUser().Id, (int)Session["idFriendChat"]));

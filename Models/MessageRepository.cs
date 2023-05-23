@@ -23,7 +23,7 @@ namespace ChatManager.Models
                     newMessage.IdRecever = idRecever;
                     newMessage.Text = text;
                     base.Add(newMessage);
-                    OnlineUsers.AddNotification(idRecever, "Vous avez recu un message de " + DB.Users.FindUser(idRecever).GetFullName());
+                    OnlineUsers.AddNotification(idRecever, "Vous avez recu un message de " + DB.Users.FindUser(idSender).GetFullName());
                 }
 
             }
