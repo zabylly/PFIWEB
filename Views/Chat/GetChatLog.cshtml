@@ -34,7 +34,7 @@
             string classeLayout = classe + "Layout";
 
             <div id="?idMessage=@item.Id" class="@classeLayout">
-                <div class=@classe title="14:57" id="@("sent_"+@item.Id)" utc="-4">
+                <div class=@classe title="@item.DateSent.ToShortTimeString()" id="@("sent_"+@item.Id)" utc="-4">
                     <p>@Helper.ParseContent(@item.Text)</p>
                 </div>
             </div>
