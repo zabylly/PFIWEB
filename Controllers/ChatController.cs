@@ -71,7 +71,7 @@ namespace ChatManager.Controllers
         public ActionResult GetFullChatLog(bool forceRefresh = false)
         {
             if (forceRefresh || DB.Message.HasChanged)
-                return PartialView(DB.Message.ToList().OrderBy(i=>i.IdSender).ThenBy(i=>i.IdRecever).ThenBy(i=>i.DateSent));
+                return PartialView(DB.Message.ToList().OrderBy(i=>i.IdSender<i.IdRecever?i.IdSender:i.IdRecever).ThenBy(i => i.IdSender > i.IdRecever ? i.IdSender : i.IdRecever));
             return null;
         }
 
