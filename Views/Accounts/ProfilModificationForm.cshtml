@@ -36,20 +36,26 @@
     </fieldset>
 
     <fieldset class="formField">
+        <div class="legend">Vérifier</div>
+        @Html.EditorFor(model => model.Verified, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Verified) } })
+        @Html.ValidationMessageFor(model => model.Verified, "", new { @class = "text-danger" })
+    </fieldset>
+
+    <fieldset class="formField">
         <div class="legend">Bloqué</div>
         @Html.EditorFor(model => model.Blocked, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Blocked) } })
         @Html.ValidationMessageFor(model => model.Blocked, "", new { @class = "text-danger" })
     </fieldset>
 
-        <div class="legend">@Html.DisplayNameFor(model => model.AvatarImageData)</div>
-        @Helper.ImageUploader(Model.Id, "AvatarImageData", Model.GetAvatarURL(), "~/Images_Data/Loading_icon.gif", "Cliquez pour choisir votre avatar")
-        @Html.ValidationMessageFor(model => model.AvatarImageData, "", new { @class = "text-danger" })
+    <div class="legend">@Html.DisplayNameFor(model => model.AvatarImageData)</div>
+    @Helper.ImageUploader(Model.Id, "AvatarImageData", Model.GetAvatarURL(), "~/Images_Data/Loading_icon.gif", "Cliquez pour choisir votre avatar")
+    @Html.ValidationMessageFor(model => model.AvatarImageData, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="@formSubmitCaption" class="btn btn-default" />
-            </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="@formSubmitCaption" class="btn btn-default" />
         </div>
+    </div>
 </div>
 }
 

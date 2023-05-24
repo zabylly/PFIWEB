@@ -265,7 +265,6 @@ namespace ChatManager.Controllers
         {
             User currentUser = DB.Users.FindUser(user.Id);
             user.Id = currentUser.Id;
-            user.Verified = currentUser.Verified;
             user.Avatar = currentUser.Avatar;
             user.CreationDate = currentUser.CreationDate;
 
@@ -275,15 +274,19 @@ namespace ChatManager.Controllers
                 ViewBag.Admin = false;
                 user.UserTypeId = currentUser.UserTypeId;
                 user.Blocked = currentUser.Blocked;
+                user.Verified = currentUser.Verified;
             }
             else
             {
                 ViewBag.UserTypes = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
                 ViewBag.Admin = true;
+                user.Password = currentUser.Password;
+                user.ConfirmPassword = currentUser.ConfirmPassword;
+                user.GenderId = currentUser.GenderId;
             }
 
             string newEmail = "";
-            if (ModelState.IsValid)
+            if (ModelState.IsValid || !(OnlineUsers.GetSessionUser().Id == user.Id))
             {
                 if (user.Password == (string)Session["UnchangedPasswordCode"])
                     user.Password = user.ConfirmPassword = currentUser.Password;
@@ -299,10 +302,10 @@ namespace ChatManager.Controllers
                     if (newEmail != "")
                     {
                         SendEmailChangedVerification(user, newEmail);
-                        return RedirectToAction("EmailChangedAlert");
+                        return OnlineUsers.GetSessionUser().Id == user.Id?RedirectToAction("EmailChangedAlert") : RedirectToAction("UserList", "Accounts");
                     }
                     else
-                        return RedirectToAction("About", "Home");
+                        return OnlineUsers.GetSessionUser().Id == user.Id ? RedirectToAction("About", "Home") : RedirectToAction("UserList", "Accounts");
                 }
                 else
                     return RedirectToAction("Report", "Errors", new { message = "Échec de modification de profil" });
