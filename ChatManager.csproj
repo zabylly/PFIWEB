@@ -278,6 +278,7 @@
     <Content Include="Views\Chat\GetChatLog.cshtml" />
     <Content Include="Views\Chat\AdminChatLog.cshtml" />
     <Content Include="Views\Chat\GetFullChatLog.cshtml" />
+    <Content Include="Views\Accounts\ProfilModificationForm.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
