@@ -13,6 +13,7 @@ namespace ChatManager.Controllers
         [OnlineUsers.UserAccess]
         public ActionResult Index()
         {
+            ViewBag.admin = OnlineUsers.GetSessionUser().IsAdmin;
             ViewBag.Recipient = Session["idFriendChat"]==null?0:(int)Session["idFriendChat"];
             return View();
         }

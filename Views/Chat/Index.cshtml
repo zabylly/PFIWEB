@@ -1,7 +1,7 @@
 ﻿
 <div style="display:grid; grid-template-columns: 65px auto; align-items:center">
-    @Helper.ImageLink("Chat", "AdminChatLog", "/favicon.png", "", "Salle de clavardage...", "width:56px")
-    @*<img src="../favicon.png" style="width:56px">*@
+    @{ if (ViewBag.admin) { @Helper.ImageLink("Chat", "AdminChatLog", "/favicon.png", "", "Salle de clavardage...", "width:56px"); }
+       else {<img src="../favicon.png" style="width:56px">} }
     <h3>Salle de discussions</h3>
 </div>
 <hr />
