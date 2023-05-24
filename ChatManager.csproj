@@ -276,6 +276,7 @@
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Friendships\GetFriendshipsList.cshtml" />
     <Content Include="Views\Chat\GetChatLog.cshtml" />
+    <Content Include="Views\Accounts\ProfilModificationForm.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

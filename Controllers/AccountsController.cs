@@ -241,7 +241,14 @@ namespace ChatManager.Controllers
         public ActionResult Profil(int id = -1)
         {
             OnlineUsers.GetSessionUser().AcceptNotification = true;
-            ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
+            if (id == -1) { 
+                ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
+                ViewBag.Admin = false;
+            }
+            else { 
+                ViewBag.UserTypes = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
+                ViewBag.Admin = true;
+            }
             User userToEdit = id==-1?OnlineUsers.GetSessionUser().Clone():DB.Users.FindUser(id);
             if (userToEdit != null)
             {
@@ -259,10 +266,21 @@ namespace ChatManager.Controllers
             User currentUser = DB.Users.FindUser(user.Id);
             user.Id = currentUser.Id;
             user.Verified = currentUser.Verified;
-            user.UserTypeId = currentUser.UserTypeId;
-            user.Blocked = currentUser.Blocked;
             user.Avatar = currentUser.Avatar;
             user.CreationDate = currentUser.CreationDate;
+
+            if (OnlineUsers.GetSessionUser().Id == user.Id)
+            {
+                ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
+                ViewBag.Admin = false;
+                user.UserTypeId = currentUser.UserTypeId;
+                user.Blocked = currentUser.Blocked;
+            }
+            else
+            {
+                ViewBag.UserTypes = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
+                ViewBag.Admin = true;
+            }
 
             string newEmail = "";
             if (ModelState.IsValid)
@@ -289,7 +307,6 @@ namespace ChatManager.Controllers
                 else
                     return RedirectToAction("Report", "Errors", new { message = "Échec de modification de profil" });
             }
-            ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
             return View(currentUser);
         }
         #endregion

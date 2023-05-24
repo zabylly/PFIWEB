@@ -1,12 +1,19 @@
 ﻿@model ChatManager.Models.User
 
-<h2>Profil</h2>
+<h2>@{@Html.Raw(ViewBag.Admin ? "Modification" : "Profil");}</h2>
 <hr />
 
 <div class="main">
     @{
-        ViewBag.Title = "Profil";
-        Html.RenderPartial("ProfilForm");
+        if (ViewBag.Admin)
+        {
+            Html.RenderPartial("ProfilModificationForm");
+        }
+        else
+        {
+            ViewBag.Title = "Profil";
+            Html.RenderPartial("ProfilForm");
+        }
     }
 </div>
 
