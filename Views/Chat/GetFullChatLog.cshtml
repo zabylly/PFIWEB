@@ -5,11 +5,11 @@
     {
         @Helper.AvatarUserIcon(ChatManager.Models.DB.Users.Get(item.IdSender));
         @Helper.AvatarUserIcon(ChatManager.Models.DB.Users.Get(item.IdRecever));
-        <span style="display: flex; column-gap: 8px; align-items: center;" id="@("delete_"+@item.Id)" class="icon fa fa-times-circle" title="Effacer ce message" data-placement="bottom"></span>
-            <div id="?idMessage=@item.Id" class="receivedLayout">
-                <div class="received" title="@item.DateSent.ToShortTimeString()" id="@item.Id" utc="-4">
-                    <p>@Helper.ParseContent(@item.Text)</p>
-                </div>
+        <span style="display: flex; column-gap: 8px; align-items: center;" id="@("delete_"+@item.Id)" class="delete_message icon red fa fa-times-circle" title="Effacer ce message" data-placement="bottom"></span>
+        <div id="?idMessage=@item.Id" class="receivedLayout">
+            <div class="received" title="@item.DateSent.ToShortTimeString()" id="@item.Id" utc="-4">
+                <p>@Helper.ParseContent(@item.Text)</p>
             </div>
-            }
-    </div>
+        </div>
+    }
+</div>
