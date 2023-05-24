@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -58,6 +59,15 @@ namespace ChatManager.Models
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($" Message send failed : Message - {ex.Message}");
+            }
+        }
+
+        public void DeleteMessageUser(int idUser)
+        {
+            var messages = ToList().Where(u => u.IdSender == idUser || u.IdRecever == idUser).ToArray();
+            for(int i = 0; i < messages.Count(); i++)
+            {
+                Delete(messages[i].Id);
             }
         }
 

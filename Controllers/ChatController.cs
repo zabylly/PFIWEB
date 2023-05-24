@@ -63,11 +63,12 @@ namespace ChatManager.Controllers
         {
             DB.Message.Delete(id);
         }
-
+        [OnlineUsers.AdminAccess]
         public ActionResult AdminChatLog()
         {
             return View();
         }
+        [OnlineUsers.AdminAccess]
         public ActionResult GetFullChatLog(bool forceRefresh = false)
         {
             if (forceRefresh || DB.Message.HasChanged)

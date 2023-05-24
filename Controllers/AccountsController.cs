@@ -238,11 +238,18 @@ namespace ChatManager.Controllers
 
         #region Profil
         [OnlineUsers.UserAccess]
-        public ActionResult Profil()
+        public ActionResult Profil(int id = -1)
         {
             OnlineUsers.GetSessionUser().AcceptNotification = true;
-            ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
-            User userToEdit = OnlineUsers.GetSessionUser().Clone();
+            if (id == -1) { 
+                ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
+                ViewBag.Admin = false;
+            }
+            else { 
+                ViewBag.UserTypes = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
+                ViewBag.Admin = true;
+            }
+            User userToEdit = id==-1?OnlineUsers.GetSessionUser().Clone():DB.Users.FindUser(id);
             if (userToEdit != null)
             {
                 Session["UnchangedPasswordCode"] = Guid.NewGuid().ToString().Substring(0, 12);
@@ -256,16 +263,30 @@ namespace ChatManager.Controllers
         [ValidateAntiForgeryToken()]
         public ActionResult Profil(User user)
         {
-            User currentUser = OnlineUsers.GetSessionUser();
+            User currentUser = DB.Users.FindUser(user.Id);
             user.Id = currentUser.Id;
-            user.Verified = currentUser.Verified;
-            user.UserTypeId = currentUser.UserTypeId;
-            user.Blocked = currentUser.Blocked;
             user.Avatar = currentUser.Avatar;
             user.CreationDate = currentUser.CreationDate;
 
+            if (OnlineUsers.GetSessionUser().Id == user.Id)
+            {
+                ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
+                ViewBag.Admin = false;
+                user.UserTypeId = currentUser.UserTypeId;
+                user.Blocked = currentUser.Blocked;
+                user.Verified = currentUser.Verified;
+            }
+            else
+            {
+                ViewBag.UserTypes = SelectListUtilities<UserType>.Convert(DB.UserTypes.ToList());
+                ViewBag.Admin = true;
+                user.Password = currentUser.Password;
+                user.ConfirmPassword = currentUser.ConfirmPassword;
+                user.GenderId = currentUser.GenderId;
+            }
+
             string newEmail = "";
-            if (ModelState.IsValid)
+            if (ModelState.IsValid || !(OnlineUsers.GetSessionUser().Id == user.Id))
             {
                 if (user.Password == (string)Session["UnchangedPasswordCode"])
                     user.Password = user.ConfirmPassword = currentUser.Password;
@@ -281,15 +302,14 @@ namespace ChatManager.Controllers
                     if (newEmail != "")
                     {
                         SendEmailChangedVerification(user, newEmail);
-                        return RedirectToAction("EmailChangedAlert");
+                        return OnlineUsers.GetSessionUser().Id == user.Id?RedirectToAction("EmailChangedAlert") : RedirectToAction("UserList", "Accounts");
                     }
                     else
-                        return RedirectToAction("About", "Home");
+                        return OnlineUsers.GetSessionUser().Id == user.Id ? RedirectToAction("About", "Home") : RedirectToAction("UserList", "Accounts");
                 }
                 else
                     return RedirectToAction("Report", "Errors", new { message = "Échec de modification de profil" });
             }
-            ViewBag.Genders = SelectListUtilities<Gender>.Convert(DB.Genders.ToList());
             return View(currentUser);
         }
         #endregion

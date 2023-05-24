@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -192,6 +193,14 @@ namespace ChatManager.Models
         {
             var tmp = DB.Friendships.ToList().Where(u => u.IdUser == OnlineUsers.GetSessionUser().Id && u.IdFriend == idFriend && u.FriendStatus == 3);
             return 1 == DB.Friendships.ToList().Where(u => u.IdUser == OnlineUsers.GetSessionUser().Id && u.IdFriend == idFriend && u.FriendStatus == 3).Count();
+        }
+        public void DeleteFriendshipUser(int idUser)
+        {
+            var friendships = ToList().Where(u => u.IdUser == idUser || u.IdFriend == idUser).ToArray();
+            for (int i = 0; i < friendships.Count(); i++)
+            {
+                Delete(friendships[i].Id);
+            }
         }
     }
 }

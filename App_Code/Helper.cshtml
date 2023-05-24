@@ -17,6 +17,15 @@
         <div class="ellipsis">@user.GetFullName()</div>
     </div>
 }
+@helper AvatarUserLink(ChatManager.Models.User user, System.Web.Mvc.MvcHtmlString link, string avatarClass = "UserMediumAvatar")
+{
+    var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+    var avatarUrl = Url.Content(user.GetAvatarURL());
+    <div class="userItem">
+        <div class="@avatarClass" style="background: url(@avatarUrl)"></div>
+        @link
+    </div>
+}
 @helper AvatarUserIcon(ChatManager.Models.User user, string avatarClass = "UserMediumAvatar")
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);

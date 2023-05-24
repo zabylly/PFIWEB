@@ -102,12 +102,12 @@ namespace ChatManager.Models
         {
             try
             {
-
                 User userToDelete = DB.Users.Get(userId);
                 if (userToDelete != null)
                 {
                     BeginTransaction();
-
+                    DB.Message.DeleteMessageUser(userId);
+                    DB.Friendships.DeleteFriendshipUser(userId);
                     RemoveLogins(userId);
                     RemoveUnverifiedEmails(userId);
                     RemoveResetPasswordCommands(userId);

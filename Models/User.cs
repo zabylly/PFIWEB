@@ -23,6 +23,7 @@ namespace ChatManager.Models
         }
         #region Data Members
         public int Id { get; set; }
+        [Display(Name = "Type usager")]
         public int UserTypeId { get; set; }
         public bool Verified { get; set; }
         public bool Blocked { get; set; }
