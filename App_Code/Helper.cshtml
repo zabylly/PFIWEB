@@ -105,11 +105,11 @@
     var iconUrl = Url.Content(icon);
     <img src="@iconUrl" class="small_icon" />
 }
-@helper ImageLink(string controller, string action, string imageUrl, string imageClass, string title)
+@helper ImageLink(string controller, string action, string imageUrl, string imageClass, string title,string style="")
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     <a href="@Url.Action(action, controller)">
-        <img src="@Url.Content(imageUrl)" class="@imageClass" title="@title" />
+        <img src="@Url.Content(imageUrl)" class="@imageClass" title="@title" style="@style"/>
     </a>
 }
 @helper Icon(string controlId, string icon_class, string TooltipMessage, string ToolTipPlacement = "bottom", string color = "#337ab7", string param = "")

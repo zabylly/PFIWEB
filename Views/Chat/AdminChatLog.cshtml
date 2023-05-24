@@ -1,0 +1,22 @@
+﻿
+<div style="display:grid; grid-template-columns: 65px auto; align-items:center">
+    <img src="../favicon.png" style="width:56px">
+    <h3>Salle de discussions</h3>
+</div>
+<hr />
+<div class="main">
+        <div class="chatListContainer" id="chatListContainer" title="Cliquez sur un de vos amis pour clavarder avec lui..."></div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/NotificationsHandler")
+
+    <script defer>
+        let friendListRefresh = new PartialRefresh("@Url.Action("GetFullChatLog")", "chatListContainer", 5, CallbackChatLog);
+        function CallbackChatLog() {
+
+    }
+    </script>
+}
+
