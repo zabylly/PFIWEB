@@ -21,7 +21,6 @@ namespace ChatManager.Controllers
         {
             Session["idFriendChat"] = idFriend;
         }
-        [OnlineUsers.UserAccess]
         public ActionResult GetFriend(bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged() || DB.Friendships.HasChanged)
@@ -69,7 +68,6 @@ namespace ChatManager.Controllers
         {
             return View();
         }
-        [OnlineUsers.AdminAccess]
         public ActionResult GetFullChatLog(bool forceRefresh = false)
         {
             if (forceRefresh || DB.Message.HasChanged)
